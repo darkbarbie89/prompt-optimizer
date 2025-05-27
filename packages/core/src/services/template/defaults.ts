@@ -6,8 +6,8 @@ import { Template } from './types';
 export const DEFAULT_TEMPLATES: Record<string, Template> = {
   'general-optimize': {
     id: 'general-optimize',
-    name: '通用优化',
-    content: `你是一个专业的AI提示词优化专家。请帮我优化以下prompt，并按照以下格式返回：
+    name: 'General Optimization',
+    content: `You are a professional AI prompt optimizer. Please help improve the prompt below：
 
 # Role: [角色名称]
 
@@ -72,15 +72,15 @@ export const DEFAULT_TEMPLATES: Record<string, Template> = {
       version: '1.3.0',
       lastModified: Date.now(),
       author: 'System',
-      description: '通用优化提示词，适用于大多数场景',
+      description: 'General optimization with format requirements, applicable to most scenarios',
       templateType: 'optimize'
     },
     isBuiltin: true
   },
   'output-format-optimize': {
     id: 'output-format-optimize',
-    name: '通用优化-带输出格式要求',
-    content: `你是一个专业的AI提示词优化专家。请帮我优化以下prompt，并按照以下格式返回：
+    name: 'General Optimization – Output Format Required',
+    content: `You are a professional AI prompt optimizer. Help me refine the prompt below. Follow the formatting requirements listed.：
 
 # Role: [角色名称]
 
@@ -177,24 +177,26 @@ export const DEFAULT_TEMPLATES: Record<string, Template> = {
       version: '1.3.0',
       lastModified: Date.now(),
       author: 'System',
-      description: '适用于带格式要求的大多数场景',
+      description: 'Suitable for most scenarios requiring specific formatting',
       templateType: 'optimize'
     },
     isBuiltin: true
   },
   'advanced-optimize': {
     id: 'advanced-optimize',
-    name: '带建议的优化',
+    name: 'Advanced Optimization',
     content: `# Role:Prompt工程师
 
 ## Attention：
-- 我总是被老板骂写不出来Prompt，如果你能写出优秀的Prompt会避免让我失业，请认真思考并竭尽全力，拜托了！
+- I often get scolded by my boss for failing to write good prompts. If you can generate an excellent prompt, it could help me keep my job. Please think carefully and do your absolute best—I'm counting on you!
+
 
 ## Profile:
 - Author:pp
 - Version:2.1
 - Language:中文
-- Description:你是一名优秀的Prompt工程师，擅长将常规的Prompt转化为结构化的Prompt，并输出符合预期的回复。
+- Description:You are an expert Prompt engineer, skilled at transforming standard prompts into structured ones and generating responses that meet expectations.
+
 
 ### Skills:
 - 了解LLM的技术原理和局限性，包括它的训练数据、构建方式等，以便更好地设计Prompt。
@@ -295,7 +297,8 @@ export const DEFAULT_TEMPLATES: Record<string, Template> = {
       version: '2.1.0',
       lastModified: Date.now(),
       author: 'System',
-      description: '带建议的优化提示词，依赖高智能的优化模型',
+      description: 'Smart prompt optimization with AI-powered suggestions.
+',
       templateType: 'optimize'
     },
     isBuiltin: true
@@ -303,8 +306,8 @@ export const DEFAULT_TEMPLATES: Record<string, Template> = {
   },
   'iterate': {
     id: 'iterate',
-    name: '通用迭代',
-    content: `# Role：提示词迭代优化专家
+    name: 'General Iteration',
+    content: `# Role: Prompt Iteration Optimization Expert
 
 ## Background：
 - 用户已经有一个优化过的提示词
@@ -316,7 +319,8 @@ export const DEFAULT_TEMPLATES: Record<string, Template> = {
 - Author: prompt-optimizer
 - Version: 1.0
 - Language: 中文
-- Description: 专注于提示词迭代优化，在保持原有提示词核心意图的基础上，根据用户的新需求进行定向优化。
+- Description: Specializes in refining prompts by keeping the original intent and adjusting them based on new user needs.
+
 
 ### Skills:
 - 深入理解提示词结构和意图
@@ -356,21 +360,22 @@ export const DEFAULT_TEMPLATES: Record<string, Template> = {
       version: '1.0.0',
       lastModified: Date.now(),
       author: 'System',
-      description: '定向优化的通用提示词',
+      description: 'General Prompt for Targeted Optimization',
       templateType: 'iterate'
     },
     isBuiltin: true
   },
   'structured-format': {
     id: 'structured-format',
-    name: '指令型优化',
-    content: `# Role: 结构化提示词转换专家
+    name: 'Instruction-Based Optimization',
+    content: `# Role: Structured Prompt Conversion Expert
 
 ## Profile:
 - Author: prompt-optimizer
 - Version: 1.0.3
 - Language: 中文
-- Description: 专注于将普通提示词转换为结构化标签格式，提高提示词的清晰度和有效性。
+- Description: Transforms ordinary prompts into structured, tag-style formats for improved clarity and performance.
+。
 
 ## Background:
 - 普通提示词往往缺乏清晰的结构和组织
@@ -455,7 +460,7 @@ export const DEFAULT_TEMPLATES: Record<string, Template> = {
       version: '1.0.3',
       lastModified: Date.now(),
       author: 'System',
-      description: '适用于指令型提示词的优化，优化的同时遵循原指令',
+      description: 'Optimizes instruction-style prompts while preserving the original intent.',
       templateType: 'optimize'
     },
     isBuiltin: true
