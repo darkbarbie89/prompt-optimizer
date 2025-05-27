@@ -1,5 +1,5 @@
 {
-  "buildCommand": "pnpm install && pnpm --filter web build",
+  "buildCommand": "pnpm install && pnpm --filter ui build && pnpm --filter web build",
   "outputDirectory": "packages/web/dist",
   "rewrites": [
     {
