@@ -1,6 +1,5 @@
 {
-  "buildCommand": "case $(pwd) in */packages/extension) cd ../.. && pnpm build && mkdir -p packages/extension/packages/web && cp -r packages/web/dist packages/extension/packages/web/dist ;; *) pnpm build ;; esac",
-  "installCommand": "pwd && case $(pwd) in */packages/extension) cd ../.. && pnpm install && pnpm i @vercel/analytics -w ;; *) pnpm install && pnpm i @vercel/analytics -w ;; esac",
+  "buildCommand": "pnpm install && pnpm -r build",
   "outputDirectory": "packages/web/dist",
   "rewrites": [
     {
@@ -12,15 +11,7 @@
       "destination": "/index.html"
     }
   ],
-  "github": {
-    "silent": true
-  },
   "env": {
     "VITE_VERCEL_DEPLOYMENT": "true"
-  },
-  "build": {
-    "env": {
-      "VITE_VERCEL_DEPLOYMENT": "true"
-    }
   }
 }
