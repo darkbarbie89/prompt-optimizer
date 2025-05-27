@@ -1,7 +1,7 @@
 import { Template } from './types';
 
 /**
- * Default prompt templates (fully translated and with correct types)
+ * Default prompt templates (final version with version as string and valid templateType)
  */
 export const DEFAULT_TEMPLATES: Record<string, Template> = {
   'general-optimize': {
@@ -36,8 +36,8 @@ export const DEFAULT_TEMPLATES: Record<string, Template> = {
 ## Initialization
 Please begin optimization based on the template above without wrapping the response in code blocks.`,
     metadata: {
-      version: 1.3,
-      lastModified: '2025-05-27T09:28:40.836620',
+      version: '1.3',
+      lastModified: Date.now(),
       author: 'System',
       description: 'General optimization with structure and format',
       templateType: 'optimize'
@@ -61,8 +61,8 @@ Please begin optimization based on the template above without wrapping the respo
 ## Initialization
 Please follow the above format and produce a well-structured optimized prompt without explanation.`,
     metadata: {
-      version: 1.3,
-      lastModified: '2025-05-27T09:28:40.836620',
+      version: '1.3',
+      lastModified: Date.now(),
       author: 'System',
       description: 'Suited for prompts requiring structured output',
       templateType: 'optimize'
@@ -101,8 +101,8 @@ Provide categorized suggestions such as:
 ## Initialization:
 Output the final prompt directly, no extra comments.`,
     metadata: {
-      version: 2.1,
-      lastModified: '2025-05-27T09:28:40.836620',
+      version: '2.1',
+      lastModified: Date.now(),
       author: 'System',
       description: 'Advanced optimization with categorized guidance',
       templateType: 'optimize'
@@ -138,8 +138,8 @@ Specify the desired response structure
 ## Initialization:
 Please reformat the user's prompt using the tags above. Keep it concise, structured, and free from added commentary or code blocks.`,
     metadata: {
-      version: 1.0,
-      lastModified: '2025-05-27T09:28:40.836620',
+      version: '1.0',
+      lastModified: Date.now(),
       author: 'System',
       description: 'Format prompts using clean instruction tags',
       templateType: 'optimize'
@@ -163,8 +163,8 @@ Refine an already optimized prompt to improve it based on new direction or goals
 ## Output:
 Present the updated prompt only. Do not add explanations or formatting wrappers.`,
     metadata: {
-      version: 1.0,
-      lastModified: '2025-05-27T09:28:40.836620',
+      version: '1.0',
+      lastModified: Date.now(),
       author: 'System',
       description: 'Refine existing prompts while preserving intent',
       templateType: 'iterate'
@@ -207,8 +207,8 @@ Bullet points or 3-paragraph summary
 ## Initialization:
 Use the format above and apply it directly to the user’s original prompt.`,
     metadata: {
-      version: 1.0,
-      lastModified: '2025-05-27T09:28:40.836620',
+      version: '1.0',
+      lastModified: Date.now(),
       author: 'System',
       description: 'Reformats and structures prompts into standard layout',
       templateType: 'optimize'
