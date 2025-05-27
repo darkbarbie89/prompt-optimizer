@@ -1,7 +1,7 @@
 import { Template } from './types';
 
 /**
- * Default prompt templates (fully translated and preserved structure)
+ * Default prompt templates (fully translated and with correct types)
  */
 export const DEFAULT_TEMPLATES: Record<string, Template> = {
   'general-optimize': {
@@ -20,11 +20,8 @@ export const DEFAULT_TEMPLATES: Record<string, Template> = {
 - Target Audience: [Audience]
 
 ## Skills
-1. [Core Skills]
-   - [Skill]: [Explanation]
-
-2. [Additional Skills]
-   - [Skill]: [Explanation]
+- [Skill 1]: [Description]
+- [Skill 2]: [Description]
 
 ## Rules
 - Maintain clarity and professionalism.
@@ -39,8 +36,8 @@ export const DEFAULT_TEMPLATES: Record<string, Template> = {
 ## Initialization
 Please begin optimization based on the template above without wrapping the response in code blocks.`,
     metadata: {
-      version: '1.3.0',
-      lastModified: '2025-05-27T09:12:05.699295',
+      version: 1.3,
+      lastModified: '2025-05-27T09:28:40.836620',
       author: 'System',
       description: 'General optimization with structure and format',
       templateType: 'optimize'
@@ -64,8 +61,8 @@ Please begin optimization based on the template above without wrapping the respo
 ## Initialization
 Please follow the above format and produce a well-structured optimized prompt without explanation.`,
     metadata: {
-      version: '1.3.0',
-      lastModified: '2025-05-27T09:12:05.699295',
+      version: 1.3,
+      lastModified: '2025-05-27T09:28:40.836620',
       author: 'System',
       description: 'Suited for prompts requiring structured output',
       templateType: 'optimize'
@@ -104,37 +101,11 @@ Provide categorized suggestions such as:
 ## Initialization:
 Output the final prompt directly, no extra comments.`,
     metadata: {
-      version: '2.1.0',
-      lastModified: '2025-05-27T09:12:05.699295',
+      version: 2.1,
+      lastModified: '2025-05-27T09:28:40.836620',
       author: 'System',
       description: 'Advanced optimization with categorized guidance',
       templateType: 'optimize'
-    },
-    isBuiltin: true
-  },
-
-  'prompt-suggestion': {
-    id: 'prompt-suggestion',
-    name: 'Prompt Suggestions',
-    content: `# Role: Suggestion Generator
-
-## Task:
-Provide helpful, structured suggestions to improve the user’s prompt in these areas:
-1. Clarity
-2. Structure
-3. Relevance
-4. Formatting
-
-Each category should include 3–5 actionable tips. Avoid repetition and make the guidance feel constructive and human-like.
-
-## Output:
-Organize the suggestions clearly under category headings.`,
-    metadata: {
-      version: '1.0.0',
-      lastModified: '2025-05-27T09:12:05.699295',
-      author: 'System',
-      description: 'Offer actionable suggestions to improve prompt',
-      templateType: 'suggest'
     },
     isBuiltin: true
   },
@@ -167,8 +138,8 @@ Specify the desired response structure
 ## Initialization:
 Please reformat the user's prompt using the tags above. Keep it concise, structured, and free from added commentary or code blocks.`,
     metadata: {
-      version: '1.0.3',
-      lastModified: '2025-05-27T09:12:05.699295',
+      version: 1.0,
+      lastModified: '2025-05-27T09:28:40.836620',
       author: 'System',
       description: 'Format prompts using clean instruction tags',
       templateType: 'optimize'
@@ -192,8 +163,8 @@ Refine an already optimized prompt to improve it based on new direction or goals
 ## Output:
 Present the updated prompt only. Do not add explanations or formatting wrappers.`,
     metadata: {
-      version: '1.0.0',
-      lastModified: '2025-05-27T09:12:05.699295',
+      version: 1.0,
+      lastModified: '2025-05-27T09:28:40.836620',
       author: 'System',
       description: 'Refine existing prompts while preserving intent',
       templateType: 'iterate'
@@ -236,8 +207,8 @@ Bullet points or 3-paragraph summary
 ## Initialization:
 Use the format above and apply it directly to the user’s original prompt.`,
     metadata: {
-      version: '1.0.3',
-      lastModified: '2025-05-27T09:12:05.699295',
+      version: 1.0,
+      lastModified: '2025-05-27T09:28:40.836620',
       author: 'System',
       description: 'Reformats and structures prompts into standard layout',
       templateType: 'optimize'
