@@ -1,15 +1,9 @@
 {
-  "buildCommand": "pnpm install && pnpm --filter ui build && pnpm --filter web build",
+  "buildCommand": "pnpm install --frozen-lockfile && pnpm -r run build",
   "outputDirectory": "packages/web/dist",
   "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "/api/:path*"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+    { "source": "/api/:path*", "destination": "/api/:path*" },
+    { "source": "/(.*)",        "destination": "/index.html" }
   ],
   "env": {
     "VITE_VERCEL_DEPLOYMENT": "true"
