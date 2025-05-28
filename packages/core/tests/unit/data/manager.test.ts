@@ -104,7 +104,7 @@ describe('DataManager', () => {
 
       const sampleUISettings = {
         'theme-id': 'dark',
-        'preferred-language': 'zh-CN',
+        'preferred-language': 
         'app:selected-optimize-model': 'model1'
       };
 
@@ -137,7 +137,7 @@ describe('DataManager', () => {
       // Should include UI settings
       expect(data.userSettings).toEqual({
         'theme-id': 'dark',
-        'preferred-language': 'zh-CN',
+        'preferred-language': 
         'app:selected-optimize-model': 'model1'
       });
     });
