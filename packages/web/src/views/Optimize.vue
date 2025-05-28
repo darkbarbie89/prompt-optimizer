@@ -1,0 +1,275 @@
+<template>
+  <!-- ===== Prompt-Optimizer tool page ===== -->
+  <MainLayoutUI>
+    <!-- ───────── title slot ───────── -->
+    <template #title>
+      {{ $t('promptOptimizer.title') }}
+    </template>
+
+    <!-- ───────── action buttons slot ───────── -->
+    <template #actions>
+      <ThemeToggleUI />
+      <ActionButtonUI icon="📝" :text="$t('nav.templates')"  @click="openTemplateManager('optimize')" />
+      <ActionButtonUI icon="📜" :text="$t('nav.history')"    @click="showHistory = true" />
+      <ActionButtonUI icon="⚙️" :text="$t('nav.modelManager')" @click="showConfig  = true" />
+      <ActionButtonUI icon="💾" :text="$t('nav.dataManager')"  @click="showDataManager = true" />
+    </template>
+
+    <!-- ───────── main content ───────── -->
+    <ContentCardUI>
+      <!-- input column -->
+      <div class="flex-none">
+        <InputPanelUI
+          v-model="prompt"
+          v-model:selectedModel="selectedOptimizeModel"
+          :label="$t('promptOptimizer.originalPrompt')"
+          :placeholder="$t('promptOptimizer.inputPlaceholder')"
+          :model-label="$t('promptOptimizer.optimizeModel')"
+          :template-label="$t('promptOptimizer.templateLabel')"
+          :button-text="$t('promptOptimizer.optimize')"
+          :loading-text="$t('common.loading')"
+          :loading="isOptimizing"
+          :disabled="isOptimizing"
+          @submit="handleOptimizePrompt"
+          @configModel="showConfig = true"
+        >
+          <!-- model select -->
+          <template #model-select>
+            <ModelSelectUI
+              ref="optimizeModelSelect"
+              :modelValue="selectedOptimizeModel"
+              @update:modelValue="selectedOptimizeModel = $event"
+              :disabled="isOptimizing"
+              @config="showConfig = true"
+            />
+          </template>
+
+          <!-- template select -->
+          <template #template-select>
+            <TemplateSelectUI
+              v-model="selectedOptimizeTemplate"
+              type="optimize"
+              @manage="openTemplateManager('optimize')"
+              @select="handleTemplateSelect"
+            />
+          </template>
+        </InputPanelUI>
+      </div>
+
+      <!-- results column -->
+      <div class="flex-1 min-h-0 overflow-y-auto">
+        <PromptPanelUI
+          v-model:optimized-prompt="optimizedPrompt"
+          :is-iterating="isIterating"
+          v-model:selected-iterate-template="selectedIterateTemplate"
+          :versions="currentVersions"
+          :current-version-id="currentVersionId"
+          @iterate="handleIteratePrompt"
+          @openTemplateManager="openTemplateManager"
+          @switchVersion="handleSwitchVersion"
+        />
+      </div>
+    </ContentCardUI>
+
+    <!-- test panel -->
+    <TestPanelUI
+      :prompt-service="promptServiceRef"
+      :original-prompt="prompt"
+      :optimized-prompt="optimizedPrompt"
+      v-model="selectedTestModel"
+      @showConfig="showConfig = true"
+    />
+
+    <!-- ───────── modal slot ───────── -->
+    <template #modals>
+      <!-- model manager -->
+      <Teleport to="body">
+        <ModelManagerUI
+          v-if="showConfig"
+          @close="handleModelManagerClose"
+          @modelsUpdated="handleModelsUpdated"
+          @select="handleModelSelect"
+        />
+      </Teleport>
+
+      <!-- template manager -->
+      <Teleport to="body">
+        <TemplateManagerUI
+          v-if="showTemplates"
+          :template-type="currentType"
+          :selected-optimize-template="selectedOptimizeTemplate"
+          :selected-iterate-template="selectedIterateTemplate"
+          @close="handleTemplateManagerClose"
+          @select="handleTemplateSelect"
+        />
+      </Teleport>
+
+      <!-- history drawer -->
+      <HistoryDrawerUI
+        v-model:show="showHistory"
+        :history="history"
+        @reuse="handleSelectHistory"
+        @clear="handleClearHistory"
+        @deleteChain="handleDeleteChain"
+      />
+
+      <!-- data manager -->
+      <DataManagerUI
+        :show="showDataManager"
+        @close="handleDataManagerClose"
+        @imported="handleDataImported"
+      />
+    </template>
+  </MainLayoutUI>
+</template>
+
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import {
+  ToastUI,
+  ModelManagerUI,
+  ThemeToggleUI,
+  OutputPanelUI,
+  PromptPanelUI,
+  TemplateManagerUI,
+  TemplateSelectUI,
+  ModelSelectUI,
+  HistoryDrawerUI,
+  InputPanelUI,
+  MainLayoutUI,
+  ContentCardUI,
+  ActionButtonUI,
+  TestPanelUI,
+  DataManagerUI,
+  usePromptOptimizer,
+  usePromptTester,
+  useToast,
+  usePromptHistory,
+  useServiceInitializer,
+  useTemplateManager,
+  useModelManager,
+  useHistoryManager,
+  useModelSelectors,
+  modelManager,
+  templateManager,
+  historyManager
+} from '@prompt-optimizer/ui'
+
+/* ---------- THEME ---------- */
+onMounted(() => {
+  const savedTheme = localStorage.getItem('theme')
+  document.documentElement.classList.remove('dark', 'theme-blue', 'theme-green', 'theme-purple')
+  if (savedTheme) {
+    document.documentElement.classList.add(savedTheme)
+  } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    document.documentElement.classList.add('dark')
+  }
+})
+
+/* ---------- TOAST / I18N ---------- */
+const toast = useToast()
+const { t } = useI18n()
+
+/* ---------- SERVICE INITIALIZATION ---------- */
+const { promptServiceRef } =
+  useServiceInitializer(modelManager, templateManager, historyManager)
+
+/* ---------- MODEL SELECTORS & MANAGER ---------- */
+const { optimizeModelSelect, testModelSelect } = useModelSelectors()
+
+const {
+  showConfig,
+  selectedOptimizeModel,
+  selectedTestModel,
+  handleModelManagerClose,
+  handleModelsUpdated,
+  handleModelSelect
+} = useModelManager({
+  modelManager,
+  optimizeModelSelect,
+  testModelSelect
+})
+
+/* ---------- PROMPT OPTIMIZER COMPOSABLE ---------- */
+const {
+  prompt,
+  optimizedPrompt,
+  isOptimizing,
+  isIterating,
+  selectedOptimizeTemplate,
+  selectedIterateTemplate,
+  currentVersions,
+  currentVersionId,
+  currentChainId,
+  handleOptimizePrompt,
+  handleIteratePrompt,
+  handleSwitchVersion,
+  saveTemplateSelection
+} = usePromptOptimizer(
+  modelManager,
+  templateManager,
+  historyManager,
+  promptServiceRef,
+  selectedOptimizeModel,
+  selectedTestModel
+)
+
+/* ---------- HISTORY ---------- */
+const {
+  history,
+  handleSelectHistory: handleSelectHistoryBase,
+  handleClearHistory: handleClearHistoryBase,
+  handleDeleteChain: handleDeleteChainBase
+} = usePromptHistory(
+  historyManager,
+  prompt,
+  optimizedPrompt,
+  currentChainId,
+  currentVersions,
+  currentVersionId
+)
+
+const {
+  showHistory,
+  handleSelectHistory,
+  handleClearHistory,
+  handleDeleteChain
+} = useHistoryManager(
+  historyManager,
+  prompt,
+  optimizedPrompt,
+  currentChainId,
+  currentVersions,
+  currentVersionId,
+  handleSelectHistoryBase,
+  handleClearHistoryBase,
+  handleDeleteChainBase
+)
+
+/* ---------- TEMPLATE MANAGER ---------- */
+const {
+  showTemplates,
+  currentType,
+  handleTemplateSelect,
+  openTemplateManager,
+  handleTemplateManagerClose
+} = useTemplateManager({
+  selectedOptimizeTemplate,
+  selectedIterateTemplate,
+  saveTemplateSelection,
+  templateManager
+})
+
+/* ---------- DATA MANAGER ---------- */
+const showDataManager = ref(false)
+
+const handleDataManagerClose = () => {
+  showDataManager.value = false
+}
+
+const handleDataImported = () => {
+  toast.success(t('dataManager.import.successWithRefresh'))
+  setTimeout(() => window.location.reload(), 1000)
+}
+</script>
