@@ -6,7 +6,7 @@ import { ActionButtonUI, ContentCardUI } from '../../src'
 // 创建i18n实例（Vue 3不需要createLocalVue）
 const i18n = createI18n({
   legacy: false,
-  locale: 'zh-CN',
+  locale: 
   messages: {}
 })
 
