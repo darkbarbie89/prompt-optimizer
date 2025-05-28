@@ -28,7 +28,6 @@
         :text="$t('nav.dataManager')"
         @click="showDataManager = true"
       />
-      <LanguageSwitchUI />
     </template>
 
     <!-- 主要内容插槽 -->
