@@ -20,6 +20,9 @@ importers:
       '@floating-ui/utils':
         specifier: ^0.2.9
         version: 0.2.9
+      '@heroicons/vue':
+        specifier: ^2.2.0
+        version: 2.2.0(vue@3.5.13(typescript@5.8.2))
       '@popperjs/core':
         specifier: ^2.11.8
         version: 2.11.8
@@ -744,6 +747,11 @@ packages:
   '@google/generative-ai@0.21.0':
     resolution: {integrity: sha512-7XhUbtnlkSEZK15kN3t+tzIMxsbKm/dSkKBFalj+20NvPKe1kBY7mR2P7vuijEn+f06z5+A8bVGKO0v39cr6Wg==}
     engines: {node: '>=18.0.0'}
+
+  '@heroicons/vue@2.2.0':
+    resolution: {integrity: sha512-G3dbSxoeEKqbi/DFalhRxJU4mTXJn7GwZ7ae8NuEQzd1bqdd0jAbdaBZlHPcvPD2xI1iGzNVB4k20Un2AguYPw==}
+    peerDependencies:
+      vue: '>= 3'
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -3730,6 +3738,10 @@ snapshots:
   '@floating-ui/utils@0.2.9': {}
 
   '@google/generative-ai@0.21.0': {}
+
+  '@heroicons/vue@2.2.0(vue@3.5.13(typescript@5.8.2))':
+    dependencies:
+      vue: 3.5.13(typescript@5.8.2)
 
   '@humanfs/core@0.19.1': {}
 

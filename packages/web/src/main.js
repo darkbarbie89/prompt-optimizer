@@ -4,6 +4,7 @@ import App from './App.vue'
 import router from './router' // 👈 NEW: import router
 
 import '@prompt-optimizer/ui/dist/style.css'
+import "./assets/tailwind.css";
 
 const app = createApp(App)
 

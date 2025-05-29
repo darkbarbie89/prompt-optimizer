@@ -59,6 +59,7 @@
     "@floating-ui/core": "^1.6.9",
     "@floating-ui/dom": "^1.6.13",
     "@floating-ui/utils": "^0.2.9",
+    "@heroicons/vue": "^2.2.0",
     "@popperjs/core": "^2.11.8",
     "@vue/reactivity": "^3.5.13",
     "@vue/runtime-core": "^3.5.13",
