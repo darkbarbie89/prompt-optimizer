@@ -256,7 +256,9 @@ const handleDataImported = () => {
 
 const isProUser = false; // <- Replace with real check
 const isProTemplate = (template) =>
-  template?.isPro === true || template?.access === 'pro';
+  template?.isPro === true ||
+  (template?.access && template?.access !== 'public') ||
+  (template?.metadata?.access && template?.metadata?.access !== 'public');
 
 const tryOptimize = () => {
   // Ensure we have the full template object
