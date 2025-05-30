@@ -19,7 +19,6 @@
       <div class="flex-none">
         <InputPanelUI
           v-model="prompt"
-          v-model:selectedTemplate="selectedOptimizeTemplate"
           v-model:selectedModel="selectedOptimizeModel"
           :label="$t('promptOptimizer.originalPrompt')"
           :placeholder="$t('promptOptimizer.inputPlaceholder')"
@@ -114,7 +113,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, unref } from 'vue';
+import { ref, onMounted, unref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
   ToastUI,
@@ -145,17 +144,6 @@ import {
   templateManager,
   historyManager
 } from '@prompt-optimizer/ui'
-  const proTemplateIds = [
-  'seo-article-writer',
-  'resume-builder',
-  'cover-letter-coach',
-  'product-description',
-  'yt-script-writer',
-  'business-idea-tester',
-  'ad-copy-writer',
-  'habit-coach'
-];
-
 
 /* ---------- THEME ---------- */
 onMounted(() => {
@@ -276,49 +264,38 @@ const handleDataImported = () => {
 
 const isProUser = false  // ← flip to true after payment flow
 
-const isProUser = false;
-
-const proTemplateIds = [
-  'seo-article-writer',
-  'resume-builder',
-  'cover-letter-coach',
-  'product-description',
-  'yt-script-writer',
-  'business-idea-tester',
-  'ad-copy-writer',
-  'habit-coach',
-];
-
-// Optional debug log to confirm
-onMounted(() => {
-  console.log('🟢 App mounted. Available Pro IDs:', proTemplateIds);
-});
+// 1️⃣  List every template ID that should be locked
+const proIds = [
+  'RD',              // Resume & Achievement Writer
+  'seoBlogPost',     // SEO Blog Post Generator
+  'emailPro',        // Professional Email Generator
+  'promptRefiner'    // Prompt Refiner
+  // ➕ add any additional Pro IDs here
+]
 
 const tryOptimize = () => {
-  toast.info('🔍 tryOptimize is running');
+  toast.info('🔍 tryOptimize is running')        // debug toast
 
-  // Unwrap ref from selected template
-  const rawSelection = unref(selectedOptimizeTemplate);
+  // Unwrap Vue ref to get actual selection value
+  const rawSelection = unref(selectedOptimizeTemplate)
 
-  // Extract the template ID in any case
+  // Always reduce to a plain ID string
   const templateId =
     typeof rawSelection === 'string'
       ? rawSelection
-      : rawSelection?.id ?? rawSelection?.templateId ?? 'UNKNOWN';
+      : rawSelection?.id ?? rawSelection?.templateId ?? 'UNKNOWN'
 
-  console.log('🆔 templateId:', templateId);
+  console.log('🆔 templateId:', templateId)      // keep for sanity
 
-  // Pro check
-  const isPro = proTemplateIds.includes(templateId);
-
-  if (isPro && !isProUser) {
-    toast.error('🚫 This is a Pro template. Please upgrade to use it.');
-    return;
+  // 🔒 Block if template is Pro and user isn’t
+  if (proIds.includes(templateId) && !isProUser) {
+    toast.error('This is a Pro template. Please upgrade to use it.')
+    return
   }
 
-  handleOptimizePrompt();
-};
-
+  // ✅ Run optimisation for free templates or Pro users
+  handleOptimizePrompt()
+}
 
 const upgradeToPro = () => {
   window.open('https://your-stripe-link.com', '_blank')
