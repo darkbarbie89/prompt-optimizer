@@ -28,7 +28,7 @@
           :loading-text="$t('common.loading')"
           :loading="isOptimizing"
           :disabled="isOptimizing"
-          @submit="tryOptimize"
+          @submit="handleOptimizePrompt"
           @configModel="showConfig = true"
         >
           <template #model-select>
@@ -113,7 +113,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, unref } from 'vue'
+import { ref, onMounted, unref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
   ToastUI,
@@ -262,7 +262,8 @@ const handleDataImported = () => {
 /*                    🔒  SIMPLE, BULLET-PROOF PRO LOCK                */
 /* ------------------------------------------------------------------ */
 
-const isProUser = false  // ← flip to true after payment flow
+
+const userIsPro = localStorage.getItem('userPlan') === 'pro';
 
 // 1️⃣  List every template ID that should be locked
 const proTemplateIds = [
@@ -274,38 +275,26 @@ const proTemplateIds = [
   'ad-copy-writer'
 ]
 
-const tryOptimize = () => {
-  toast.info('🔍 tryOptimize is running')        // debug toast
-
-  // Always reduce to a plain ID string
-  const temptemplateId =
-    typeof rawSelection === 'string'
-      ? rawSelection
-      : rawSelection?.id ?? rawSelection?.templateId ?? 'UNKNOWN'
-
-  console.log('🆔 templateId:', templateId)      // keep for sanity
-
-
-  // ✅ Run optimisation for free templates or Pro users
-  handleOptimizePrompt()
-}
 
 const upgradeToPro = () => {
   window.open('https://your-stripe-link.com', '_blank')
-}
-</script>
+};
 
 watch(selectedOptimizeTemplate, (newVal) => {
-  const rawSelection = unref(newVal);
-  const templateId = typeof rawSelection === 'string'
-    ? rawSelection
-    : rawSelection?.templateId ?? 'UNKNOWN';
+  const raw = unref(newVal);
+  const templateId = typeof raw === 'string'
+    ? raw
+    : raw?.templateId ?? 'UNKNOWN';
+
+  console.log('🪪 Selected template ID:', templateId);
 
   if (proTemplateIds.includes(templateId) && !userIsPro) {
     toast.error('🚫 This template is for Pro users only.');
     selectedOptimizeTemplate.value = null;
     return;
   }
+
+  handleOptimizePrompt(); // only if needed
 });
 </script>
 
