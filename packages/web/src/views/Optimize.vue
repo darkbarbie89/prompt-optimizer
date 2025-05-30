@@ -271,19 +271,20 @@ const proIds = [
 const tryOptimize = () => {
   toast.info('🔍 tryOptimize is running');  // debug toast—keep for now
 
-  // Always reduce to an ID string
+  
+  // DEBUG – see the real ID string we must lock
   const templateId =
     typeof selectedOptimizeTemplate === 'string'
       ? selectedOptimizeTemplate
       : selectedOptimizeTemplate?.id;
+  console.log('🆔 templateId:', templateId);
 
-  // If this template is in the locked list, block free users
   if (proIds.includes(templateId) && !isProUser) {
     toast.error('This is a Pro template. Please upgrade to use it.');
-    return;                                 // 🔒 stop here
+    return;
   }
 
-  handleOptimizePrompt();                   // ✅ run optimisation
+  handleOptimizePrompt();
 };
 
 /* ---------------------------------------------------------- */
