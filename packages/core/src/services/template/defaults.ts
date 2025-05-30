@@ -1,16 +1,11 @@
-
 import { Template } from './types';
 
-/**
- * Deep-structured prompt templates (Free & Pro)
- */
 export const DEFAULT_TEMPLATES: Record<string, Template> = {
-
   'general-optimize': {
     id: 'general-optimize',
-    name: 'General Optimization',
-    description: 'Structured prompt cleanup & improvement.',
-    content: `You are a professional AI prompt optimizer. Please improve the prompt using the structure below. Avoid any code blocks or additional explanation:
+    name: 'Start Here – General Optimizer',
+    description: 'Begin optimizing any prompt using this general AI structure.',
+    content: `You are a professional AI prompt optimizer. Please improve the prompt using the structure below. Avoid any code blocks or additional explanation.
 
 # Role: [Role Name]
 
@@ -38,13 +33,114 @@ export const DEFAULT_TEMPLATES: Record<string, Template> = {
 
 ## Initialization
 Please begin optimization based on the template above without wrapping the response in code blocks.`,
+    metadata: {
+      version: '1.0',
+      lastModified: Date.now(),
+      author: 'System',
+      description: 'Start Here – General Optimizer',
+      templateType: 'optimize'
+    },
+    isBuiltin: true,
+    access: 'free'
+  },
+  'email-writer': {
+    id: 'email-writer',
+    name: 'Professional Email Generator',
+    description: 'Generate clear, polite emails for business contexts.',
+    content: `# Role: Email Writing Assistant
+
+## Profile
+- Sender Role: [Customer, Applicant, Manager]
+- Recipient: [Support, HR, Client]
+- Purpose: [Request, Complaint, Follow‑up]
+- Tone: [Polite, Formal, Friendly]
+
+## Structure
+- Subject
+- Greeting
+- Body (2–3 short paragraphs)
+- Closing & Signature
+
+## Constraints
+- No slang or emojis
+- Keep body concise
+
+## Initialization
+Rewrite the user brief into a prompt that asks AI to draft the full email per structure.`,
+    metadata: {
+      version: '1.0',
+      lastModified: Date.now(),
+      author: 'System',
+      description: 'Professional Email Generator',
+      templateType: 'optimize'
+    },
+    isBuiltin: true,
+    access: 'free'
+  },
+  'student-helper': {
+    id: 'student-helper',
+    name: 'Student Assignment Helper',
+    description: 'Guide students to craft structured essays or answers.',
+    content: `# Role: Academic Assistant
+
+## Profile
+- Audience: Secondary/College students
+- Expertise: Essay writing, explanations
+
+## Instructions
+1. Break down assignment requirements.
+2. Provide a clear outline: introduction, body points, conclusion.
+3. Suggest credible sources or evidence types.
+
+## Constraints
+- Formal academic tone
+- No personal anecdotes unless asked
+
+## Initialization
+Transform the topic into a full essay-writing prompt using the above structure.`,
+    metadata: {
+      version: '1.0',
+      lastModified: Date.now(),
+      author: 'System',
+      description: 'Student Assignment Helper',
+      templateType: 'optimize'
+    },
+    isBuiltin: true,
+    access: 'free'
+  },
+  'social-post-helper': {
+    id: 'social-post-helper',
+    name: 'Social Media Caption Generator',
+    description: 'Write catchy, brand‑aligned captions with emojis & hashtags.',
+    content: `# Role: Social Media Caption Expert
+
+## Profile
+- Platform: [Instagram | TikTok]
+- Audience: [Teens, Professionals]
+- Tone: [Funny, Inspirational]
+- Goal: [Engagement, Sales]
+
+## Output Style
+- Length: [Short | Medium]
+- Emojis: [None | Light | High]
+- Hashtags: [Niche | Trendy]
+
+## Initialization
+Create a prompt directing AI to craft 3 caption variations that match the profile above.`,
+    metadata: {
+      version: '1.0',
+      lastModified: Date.now(),
+      author: 'System',
+      description: 'Social Media Caption Generator',
+      templateType: 'optimize'
+    },
     isBuiltin: true,
     access: 'free'
   },
   'output-format-optimize': {
     id: 'output-format-optimize',
-    name: 'Prompt with Output Format',
-    description: 'Optimize prompt and force output format.',
+    name: 'Prompt + Output Formatter',
+    description: 'Refine prompt and enforce specific output format (Markdown, JSON, etc.).',
     content: `You are a professional prompt engineer. Please optimize the following prompt based on the requirements and ensure proper output formatting:
 
 # Role: [Role Name]
@@ -57,313 +153,317 @@ Please begin optimization based on the template above without wrapping the respo
 
 ## Initialization
 Please follow the above format and produce a well-structured optimized prompt without explanation.`,
+    metadata: {
+      version: '1.0',
+      lastModified: Date.now(),
+      author: 'System',
+      description: 'Prompt + Output Formatter',
+      templateType: 'optimize'
+    },
     isBuiltin: true,
     access: 'free'
   },
-  'instruction-prompt': {
-    id: 'instruction-prompt',
-    name: 'Instructional Prompt Formatter',
-    description: 'Turn messy prompt into task/context/instructions.',
+  'instructional-format-optimize': {
+    id: 'instructional-format-optimize',
+    name: 'Structured Prompt Tags Builder',
+    description: 'Convert prompts into <task><context><instructions><output_format> tag style.',
     content: `# Role: Structured Prompt Expert
 
-## Objective:
-Turn a messy or general prompt into a clearly structured format.
+## Objective
+Convert a general prompt into a tag‑based format.
 
-## Requirements:
+## Requirements
 - Use <task>, <context>, <instructions>, <output_format> tags
-- Maintain semantic clarity
-- Do not rewrite the context
+- Preserve original meaning
 
-## Output Example:
-<optimized_prompt>
-<task>Summarize a news article</task>
-
-<context>
-Original prompt text goes here.
-</context>
-
-<instructions>
-1. Read carefully
-2. Extract key facts
-3. Summarize clearly
-</instructions>
-
-<output_format>
-Bullet points or 3-paragraph summary
-</output_format>
-</optimized_prompt>
-
-## Initialization:
-Use the format above and apply it directly to the user’s original prompt.`,
+## Initialization
+Return only the tag‑formatted prompt, no explanations.`,
+    metadata: {
+      version: '1.0',
+      lastModified: Date.now(),
+      author: 'System',
+      description: 'Structured Prompt Tags Builder',
+      templateType: 'optimize'
+    },
     isBuiltin: true,
     access: 'free'
   },
-  'expert-fix': {
-    id: 'expert-fix',
-    name: 'Expert-Level Prompt Fix',
-    description: 'Analyse logic & tone, return optimised version.',
+  'advanced-optimize': {
+    id: 'advanced-optimize',
+    name: 'Prompt Refiner (Pro Tips)',
+    description: 'Analyse prompt logic and suggest deep improvements.',
     content: `# Role: Prompt Optimization Expert
 
-## Background:
-My job depends on writing better prompts. Please help improve the following one with full focus and creativity.
+## Background
+Your job depends on writing better prompts. Improve the following with full focus and creativity.
 
-## Profile:
-- Expert in transforming standard prompts into structured formats.
-- Deep understanding of NLP and LLM behavior.
-- Experience designing goal-driven prompts.
+## Constraints
+- Stick to original context
+- Avoid generalities
+- Use markdown (no code blocks)
 
-## Constraints:
-- Stick to the original context and needs.
-- Avoid generalities; focus on precision.
-- Use markdown, avoid code blocks.
-
-## Goals:
-- Analyze and restructure prompt
+## Goals
+- Analyse and restructure
 - Improve logic, readability, engagement
 
-## Suggestions:
-Provide categorized suggestions such as:
+## Suggestions
+Provide categories:
 - Structure Improvements
 - Logic Enhancements
 - Readability Tips
 
-## Initialization:
-Output the final prompt directly, no extra comments.`,
-    isBuiltin: true,
-    access: 'pro'
-  },
-  'tag-format': {
-    id: 'tag-format',
-    name: 'Prompt to Structured Tag Format',
-    description: 'Convert prompt into tagged instructions for devs.',
-    content: `# Role: Structured Prompt Formatter
-
-## Goal:
-Convert the given prompt into a structured, tag-based format.
-
-## Tags to Use:
-<task>Describe the task</task>
-
-## Initialization:
-Output the final tag-based prompt without explanations.`,
-    isBuiltin: true,
-    access: 'pro'
-  },
-  'social-caption': {
-    id: 'social-caption',
-    name: 'Social Media Caption Prompt',
-    description: 'Generate engaging captions with emojis & hashtags.',
-    content: `# Role: Social Media Caption Expert
-
-## Profile
-- Platform: [Instagram, TikTok, Facebook, etc.]
-- Audience: [Teenagers, Professionals, Moms, Fitness enthusiasts, etc.]
-- Tone: [Funny, Informative, Inspirational, Casual]
-- Engagement Style: [Question-based, Emoji-rich, Hashtag-heavy, CTA-focused]
-
-## Output Style
-- Length: [Short, Medium, Long]
-- Format: [Single caption, Caption + CTA, Hook + Body]
-- Emoji Level: [None, Light, High]
-- Hashtag Strategy: [Niche, Trendy, Mix, Skip]
-
-## Instructions
-1. Understand the audience and platform culture.
-2. Generate a caption that fits the tone and strategy.
-3. Include emojis and hashtags as required.
-4. Avoid clichés or overly salesy language.
-
-## Constraints
-- Do not include discount codes.
-- Keep within platform character limits.
-- Use maximum 3 hashtags unless specified.
-
 ## Initialization
-Generate a prompt that asks the AI to create a caption based on the settings above.`,
+Return the improved prompt only.`,
+    metadata: {
+      version: '1.0',
+      lastModified: Date.now(),
+      author: 'System',
+      description: 'Prompt Refiner (Pro Tips)',
+      templateType: 'optimize'
+    },
     isBuiltin: true,
-    access: 'pro'
+    access: 'free'
   },
-  'essay-builder': {
-    id: 'essay-builder',
-    name: 'Student Essay Builder',
-    description: 'Turn a topic into a structured academic essay prompt.',
-    content: `# Role: Academic Essay Prompt Engineer
+  'seo-article-writer': {
+    id: 'seo-article-writer',
+    name: 'SEO Blog Post Generator',
+    description: 'Generate long‑form, keyword‑rich articles.',
+    content: `# Role: SEO Article Architect
 
 ## Profile
-- Subject: [History, Literature, Science, etc.]
-- Topic: [Essay topic here]
-- Level: [High School, College, University]
-- Tone: [Formal, Argumentative, Analytical]
-
-## Instructions
-1. Guide AI to write a 5‑paragraph essay:
-   - Introduction with thesis
-   - Three body paragraphs with evidence
-   - Conclusion with closing summary
-2. Use formal academic language.
-
-## Output Format
-- Introduction (3–4 sentences)
-- Body Paragraph 1
-- Body Paragraph 2
-- Body Paragraph 3
-- Conclusion
-
-## Constraints
-- Avoid contractions.
-- No personal anecdotes unless specified.
-
-## Initialization
-Rewrite the user’s topic as a prompt that generates a well‑structured academic essay.`,
-    isBuiltin: true,
-    access: 'pro'
-  },
-  'email-prompt': {
-    id: 'email-prompt',
-    name: 'Email Writing Prompt',
-    description: 'Produce polite, professional email drafts.',
-    content: `# Role: Professional Email Prompt Architect
-
-## Profile
-- Sender Role: [Customer, Job Applicant, Vendor, Manager]
-- Recipient: [Support, Hiring Manager, Client, Colleague]
-- Purpose: [Request, Complaint, Follow-up, Thank You, Resignation]
-- Tone: [Polite, Formal, Friendly, Assertive]
+- Topic: [Main topic]
+- Target Keywords: [Keyword list]
+- Audience: [Blog readers]
+- Tone: [Informative, Friendly]
 
 ## Structure
-- Subject: [Intent]
-- Greeting: [Dear X, Hi Team]
-- Body: [Main message with context]
-- Call to Action: [Ask, Request, Confirm]
-- Closing: [Best regards, Sincerely]
+1. Title (H1)
+2. Intro (100 words)
+3. H2 Sections with H3 subsections
+4. Conclusion with CTA
 
-## Instructions
-1. Rewrite the request into a clear email prompt.
-2. Specify structure and tone.
-3. Keep body to 2–3 short paragraphs.
-
-## Constraints
-- No slang or emojis.
-- Be concise.
+## SEO Rules
+- Use keywords naturally
+- Include semantic variants
+- Keep paragraphs <120 words
 
 ## Initialization
-Generate a prompt that instructs AI to draft a professional email using the profile and structure above.`,
+Create a prompt that instructs AI to write a full SEO article per the above.`,
+    metadata: {
+      version: '1.0',
+      lastModified: Date.now(),
+      author: 'System',
+      description: 'SEO Blog Post Generator',
+      templateType: 'optimize'
+    },
     isBuiltin: true,
     access: 'pro'
   },
-  'reels-idea': {
-    id: 'reels-idea',
-    name: 'Trending Reels Idea Generator',
-    description: 'Prompt for viral Instagram/TikTok video ideas.',
-    content: `# Role: Viral Reels Idea Architect
+  'resume-builder': {
+    id: 'resume-builder',
+    name: 'Resume & Achievement Writer',
+    description: 'Turn job history into impactful bullet points.',
+    content: `# Role: Resume Bullet Stylist
 
 ## Profile
-- Platform: [Instagram Reels, TikTok]
-- Niche: [e.g., cooking, fitness, tech gadgets]
-- Goal: [Brand awareness, Engagement, Product showcase]
-- Tone: [Humorous, Inspirational, Educational]
+- Industry: [Industry]
+- Level: [Entry, Mid, Senior]
+- Focus: [Achievements, Responsibilities]
 
-## Output Requirements
-- Number of Ideas: [e.g., 5]
-- Format per Idea: Hook | Key Action | Suggested Sound
+## Bullet Framework
+- Action Verb + Task + Result + Metric
 
 ## Instructions
-1. Align ideas with niche and goal.
-2. Keep each idea under 30 seconds conceptually.
-3. Suggest trending audio if relevant.
-
-## Constraints
-- Avoid copying existing viral videos.
-- Keep language simple and energetic.
+1. Identify key achievements.
+2. Quantify results (%, $, time).
+3. Keep bullets 1–2 lines.
 
 ## Initialization
-Create a prompt that asks AI for short‑form video ideas using the profile and requirements above.`,
+Produce a prompt for AI to rewrite raw job history into achievement bullets.`,
+    metadata: {
+      version: '1.0',
+      lastModified: Date.now(),
+      author: 'System',
+      description: 'Resume & Achievement Writer',
+      templateType: 'optimize'
+    },
     isBuiltin: true,
     access: 'pro'
   },
-  'study-notes': {
-    id: 'study-notes',
-    name: 'Study Notes Prompt',
-    description: 'Summarise chapters into bullet-point revision notes.',
-    content: `# Role: Study Notes Prompt Specialist
+  'cover-letter-coach': {
+    id: 'cover-letter-coach',
+    name: 'Cover Letter Generator',
+    description: 'Craft tailored cover letters for job applications.',
+    content: `# Role: Cover Letter Coach
 
 ## Profile
-- Subject: [Biology, History, Chemistry, etc.]
-- Source Material Length: [Pages, Chapters, Minutes of lecture]
-- Education Level: [Middle School, High School, College]
+- Position: [Job title]
+- Company: [Company name]
+- Values: [Company values]
 
-## Instructions
-1. Instruct AI to extract key facts, terms, and definitions.
-2. Summarize content into concise bullet points.
-3. Group notes by subtopic or heading.
+## Structure
+1. Hook (why you fit)
+2. Body (skills & stories)
+3. Closing (CTA)
 
-## Output Format
-- Heading: [Subtopic]
-  - Bullet 1
-  - Bullet 2
-
-## Constraints
-- Avoid full sentences longer than 20 words.
-- No personal opinions.
+## Tone
+- Professional, Enthusiastic
 
 ## Initialization
-Generate a prompt that guides AI to create structured study notes from the given material.`,
+Convert user info into a cover‑letter‑writing prompt using structure above.`,
+    metadata: {
+      version: '1.0',
+      lastModified: Date.now(),
+      author: 'System',
+      description: 'Cover Letter Generator',
+      templateType: 'optimize'
+    },
     isBuiltin: true,
     access: 'pro'
   },
-  'linkedin-post': {
-    id: 'linkedin-post',
-    name: 'LinkedIn Post Generator',
-    description: 'Turn ideas into professional LinkedIn content.',
-    content: `# Role: LinkedIn Post Prompt Designer
+  'product-description': {
+    id: 'product-description',
+    name: 'E‑commerce Copy Generator',
+    description: 'Produce high‑converting product descriptions.',
+    content: `# Role: Product Copywriter
 
-## Profile
-- Industry: [Tech, Marketing, HR, Finance, etc.]
-- Objective: [Share insight, Announce achievement, Ask question]
-- Tone: [Professional, Conversational, Thought‑leadership]
-- Audience: [Peers, Clients, Recruiters]
+## Product Info
+- Name: [Product name]
+- Features: [Key features]
+- Benefits: [User benefits]
+- Audience: [Target customers]
 
-## Instructions
-1. Create a hook in the first sentence.
-2. Provide value or story in 2–3 sentences.
-3. End with a question or CTA to drive engagement.
-
-## Output Constraints
-- 1300 characters max.
-- Use emojis sparingly (optional).
+## Structure
+- Hook sentence
+- Feature → Benefit bullets
+- Social proof line
+- CTA
 
 ## Initialization
-Rewrite the request below into a prompt that instructs AI to craft a compelling LinkedIn post using the profile and instructions above.`,
+Generate a prompt that asks AI to create sales copy with this structure.`,
+    metadata: {
+      version: '1.0',
+      lastModified: Date.now(),
+      author: 'System',
+      description: 'E‑commerce Copy Generator',
+      templateType: 'optimize'
+    },
     isBuiltin: true,
     access: 'pro'
   },
-  'persona-builder': {
-    id: 'persona-builder',
-    name: 'Role + Persona Prompt Builder',
-    description: 'Assign AI a personality and detailed task.',
-    content: `# Role: Persona Prompt Architect
+  'yt-script-writer': {
+    id: 'yt-script-writer',
+    name: 'YouTube Script Generator',
+    description: 'Write engaging video scripts with hooks & CTA.',
+    content: `# Role: YouTube Script Writer
 
-## Persona Details
-- Role Name: [e.g., Expert Gardener, Financial Advisor]
-- Background: [Brief backstory]
-- Personality: [Friendly, Analytical, Humorous]
-- Voice Style: [Casual, Professional, Storyteller]
+## Video Profile
+- Topic: [Topic]
+- Length: [8‑10 minutes]
+- Audience: [Viewers type]
 
-## Tasks
-- Primary Goal: [What the AI should achieve]
-- Secondary Goals: [Any additional objectives]
+## Structure
+1. Hook
+2. Intro
+3. Main Points (with mini‑hooks)
+4. Conclusion & CTA
 
-## Workflow
-1. Greet the user in character.
-2. Ask clarifying questions.
-3. Provide detailed, context-aware answers.
-
-## Constraints
-- Remain in character unless instructed otherwise.
-- Do not mention being an AI.
+## Tone
+- Conversational, Energetic
 
 ## Initialization
-Generate a prompt that defines the persona above and instructs AI to follow the workflow and constraints.`,
+Formulate a prompt instructing AI to draft the full script per structure.`,
+    metadata: {
+      version: '1.0',
+      lastModified: Date.now(),
+      author: 'System',
+      description: 'YouTube Script Generator',
+      templateType: 'optimize'
+    },
+    isBuiltin: true,
+    access: 'pro'
+  },
+  'business-idea-tester': {
+    id: 'business-idea-tester',
+    name: 'Startup Idea Evaluator',
+    description: 'Assess business ideas with SWOT‑style prompts.',
+    content: `# Role: Startup Idea Evaluator
+
+## Idea Brief
+- Concept: [Idea]
+- Market: [Target market]
+- Goal: [Problem solved]
+
+## Analysis Framework
+- Strengths
+- Weaknesses
+- Opportunities
+- Threats
+- Monetization Paths
+
+## Initialization
+Create a prompt to have AI evaluate the idea using the above framework.`,
+    metadata: {
+      version: '1.0',
+      lastModified: Date.now(),
+      author: 'System',
+      description: 'Startup Idea Evaluator',
+      templateType: 'optimize'
+    },
+    isBuiltin: true,
+    access: 'pro'
+  },
+  'ad-copy-writer': {
+    id: 'ad-copy-writer',
+    name: 'Ad Copy Generator',
+    description: 'Generate persuasive ads using AIDA & PAS frameworks.',
+    content: `# Role: Ad Copy Specialist
+
+## Campaign
+- Platform: [Facebook, Google]
+- Product: [Product/Service]
+- Audience: [Target]
+
+## Framework
+- AIDA or PAS
+
+## Initialization
+Write a prompt that directs AI to craft 3 ad variations with chosen framework.`,
+    metadata: {
+      version: '1.0',
+      lastModified: Date.now(),
+      author: 'System',
+      description: 'Ad Copy Generator',
+      templateType: 'optimize'
+    },
+    isBuiltin: true,
+    access: 'pro'
+  },
+  'habit-coach': {
+    id: 'habit-coach',
+    name: 'Habit Building Reflection Coach',
+    description: 'Guide users to set and track personal habits.',
+    content: `# Role: Habit Coach Prompt
+
+## User Profile
+- Goal Habit: [e.g., Daily Reading]
+- Motivation: [Why]
+- Timeframe: [30 days]
+
+## Instructions
+1. Ask AI to create habit plan: trigger, action, reward.
+2. Provide weekly reflection questions.
+3. Offer motivational tips.
+
+## Initialization
+Produce a prompt for AI to act as a habit coach using this plan.`,
+    metadata: {
+      version: '1.0',
+      lastModified: Date.now(),
+      author: 'System',
+      description: 'Habit Building Reflection Coach',
+      templateType: 'optimize'
+    },
     isBuiltin: true,
     access: 'pro'
   },

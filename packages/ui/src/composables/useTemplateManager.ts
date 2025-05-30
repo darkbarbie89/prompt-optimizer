@@ -80,9 +80,14 @@ export function useTemplateManager(options: TemplateManagerOptions): TemplateMan
           selectedIterateTemplate.value = iterateTemplates[0]
         }
       }
-
+      
+      // Fallback if no optimize template is selected
+        const optimizeTemplates = templateManager.listTemplatesByType('optimize');
+        if (!selectedOptimizeTemplate.value && optimizeTemplates.length > 0) {
+          selectedOptimizeTemplate.value = optimizeTemplates[0];
+}
       // If still unable to load any templates, show error
-      if (!selectedOptimizeTemplate.value || !selectedIterateTemplate.value) {
+      if (!selectedOptimizeTemplate.value && !selectedIterateTemplate.value) {
         throw new Error(t('toast.error.noDefaultTemplate'))
       }
     } catch (error) {

@@ -232,18 +232,17 @@ export function usePromptOptimizer(
         }
       }
       
-      // 如果没有已保存的提示词或加载失败，使用该类型的第一个提示词
-      if (!selectedIterateTemplate.value) {
-        const iterateTemplates = templateManager.listTemplatesByType('iterate')
-        if (iterateTemplates.length > 0) {
-          selectedIterateTemplate.value = iterateTemplates[0]
-        }
+      // 如果还没有选择优化模板，尝试使用第一个 optimize 类型模板
+         const optimizeTemplates = templateManager.listTemplatesByType('optimize')
+      if (!selectedOptimizeTemplate.value && optimizeTemplates.length > 0) {
+       selectedOptimizeTemplate.value = optimizeTemplates[0]
       }
 
       // 如果仍然无法加载任何提示词，显示错误
-      if (!selectedOptimizeTemplate.value || !selectedIterateTemplate.value) {
-        throw new Error(t('toast.error.noDefaultTemplate'))
+      if (!selectedOptimizeTemplate.value && !selectedIterateTemplate.value) {
+         throw new Error(t('toast.error.noDefaultTemplate'))
       }
+      
     } catch (error) {
       console.error(t('toast.error.loadTemplateFailed'), error)
       toast.error(t('toast.error.loadTemplateFailed'))
