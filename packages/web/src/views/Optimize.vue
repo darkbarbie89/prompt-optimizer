@@ -259,18 +259,29 @@ const isProTemplate = (template) =>
   template?.isPro === true || template?.access === 'pro';
 
 const tryOptimize = () => {
+  // Ensure we have the full template object
   const templateObj =
     typeof selectedOptimizeTemplate === 'string'
       ? templateManager.getTemplateById('optimize', selectedOptimizeTemplate)
       : selectedOptimizeTemplate;
 
-  if (isProTemplate(templateObj) && !isProUser) {
-    toast.error("This is a Pro template. Please upgrade to use it.");
+  /* ─── 🔍 DEBUG LOGS ─── */
+  console.log('🔍 raw value:', selectedOptimizeTemplate);
+  console.log('🔍 templateObj:', templateObj);
+
+  // Double-check any nesting of access flag
+  const isPro =
+    isProTemplate(templateObj) ||
+    templateObj?.metadata?.access === 'pro';
+
+  if (isPro && !isProUser) {
+    toast.error('This is a Pro template. Please upgrade to use it.');
     return;
   }
 
   handleOptimizePrompt();
 };
+
 
 const upgradeToPro = () => {
   window.open("https://your-stripe-link.com", "_blank");
