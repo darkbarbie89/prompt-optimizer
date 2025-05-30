@@ -277,11 +277,8 @@ const proTemplateIds = [
 const tryOptimize = () => {
   toast.info('🔍 tryOptimize is running')        // debug toast
 
-  // Unwrap Vue ref to get actual selection value
-  const rawSelection = unref(selectedOptimizeTemplate)
-
   // Always reduce to a plain ID string
-  const templateId =
+  const temptemplateId =
     typeof rawSelection === 'string'
       ? rawSelection
       : rawSelection?.id ?? rawSelection?.templateId ?? 'UNKNOWN'
