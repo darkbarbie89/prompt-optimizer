@@ -1,24 +1,21 @@
+
 <template>
   <!-- ===== Prompt-Optimizer tool page ===== -->
   <MainLayoutUI>
-    <!-- ───────── title slot ───────── -->
     <template #title>
       {{ $t('promptOptimizer.title') }}
     </template>
 
-    <!-- ───────── action buttons slot ───────── -->
     <template #actions>
-  <ActionButtonUI icon="🚀" text="Upgrade to Pro" @click="upgradeToPro" />
-  <ThemeToggleUI />
-  <ActionButtonUI icon="📝" :text="$t('nav.templates')" @click="openTemplateManager('optimize')" />
-  <ActionButtonUI icon="📜" :text="$t('nav.history')" @click="showHistory = true" />
-  <ActionButtonUI icon="⚙️" :text="$t('nav.modelManager')" @click="showConfig = true" />
-  <ActionButtonUI icon="💾" :text="$t('nav.dataManager')" @click="showDataManager = true" />
-</template>
+      <ActionButtonUI icon="🚀" text="Upgrade to Pro" @click="upgradeToPro" />
+      <ThemeToggleUI />
+      <ActionButtonUI icon="📝" :text="$t('nav.templates')" @click="openTemplateManager('optimize')" />
+      <ActionButtonUI icon="📜" :text="$t('nav.history')" @click="showHistory = true" />
+      <ActionButtonUI icon="⚙️" :text="$t('nav.modelManager')" @click="showConfig = true" />
+      <ActionButtonUI icon="💾" :text="$t('nav.dataManager')" @click="showDataManager = true" />
+    </template>
 
-    <!-- ───────── main content ───────── -->
     <ContentCardUI>
-      <!-- input column -->
       <div class="flex-none">
         <InputPanelUI
           v-model="prompt"
@@ -34,7 +31,6 @@
           @submit="tryOptimize"
           @configModel="showConfig = true"
         >
-          <!-- model select -->
           <template #model-select>
             <ModelSelectUI
               ref="optimizeModelSelect"
@@ -45,7 +41,6 @@
             />
           </template>
 
-          <!-- template select -->
           <template #template-select>
             <TemplateSelectUI
               v-model="selectedOptimizeTemplate"
@@ -57,7 +52,6 @@
         </InputPanelUI>
       </div>
 
-      <!-- results column -->
       <div class="flex-1 min-h-0 overflow-y-auto">
         <PromptPanelUI
           v-model:optimized-prompt="optimizedPrompt"
@@ -72,7 +66,6 @@
       </div>
     </ContentCardUI>
 
-    <!-- test panel -->
     <TestPanelUI
       :prompt-service="promptServiceRef"
       :original-prompt="prompt"
@@ -81,9 +74,7 @@
       @showConfig="showConfig = true"
     />
 
-    <!-- ───────── modal slot ───────── -->
     <template #modals>
-      <!-- model manager -->
       <Teleport to="body">
         <ModelManagerUI
           v-if="showConfig"
@@ -93,7 +84,6 @@
         />
       </Teleport>
 
-      <!-- template manager -->
       <Teleport to="body">
         <TemplateManagerUI
           v-if="showTemplates"
@@ -105,7 +95,6 @@
         />
       </Teleport>
 
-      <!-- history drawer -->
       <HistoryDrawerUI
         v-model:show="showHistory"
         :history="history"
@@ -114,7 +103,6 @@
         @deleteChain="handleDeleteChain"
       />
 
-      <!-- data manager -->
       <DataManagerUI
         :show="showDataManager"
         @close="handleDataManagerClose"
@@ -125,31 +113,6 @@
 </template>
 
 <script setup lang="ts">
-
-const isProUser = false; // ← Update this logic later when you have real auth
-const isProTemplate = (template) =>
-  template?.isPro === true || template?.access === 'pro';
-
-const tryOptimize = () => {
-  // Ensure we have the full template object even if the dropdown returns an ID
-  const templateObj =
-    typeof selectedOptimizeTemplate === 'string'
-      ? templateManager.getTemplateById('optimize', selectedOptimizeTemplate)
-      : selectedOptimizeTemplate;
-
-  if (isProTemplate(templateObj) && !isProUser) {
-    toast.error("This is a Pro template. Please upgrade to use it.");
-    return;
-  }
-  handleOptimizePrompt();
-}
-  handleOptimizePrompt();
-};
-
-const upgradeToPro = () => {
-  window.open("https://your-stripe-link.com", "_blank");
-};
-
 import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
@@ -182,7 +145,6 @@ import {
   historyManager
 } from '@prompt-optimizer/ui'
 
-/* ---------- THEME ---------- */
 onMounted(() => {
   const savedTheme = localStorage.getItem('theme')
   document.documentElement.classList.remove('dark', 'theme-blue', 'theme-green', 'theme-purple')
@@ -193,15 +155,12 @@ onMounted(() => {
   }
 })
 
-/* ---------- TOAST / I18N ---------- */
 const toast = useToast()
 const { t } = useI18n()
 
-/* ---------- SERVICE INITIALIZATION ---------- */
 const { promptServiceRef } =
   useServiceInitializer(modelManager, templateManager, historyManager)
 
-/* ---------- MODEL SELECTORS & MANAGER ---------- */
 const { optimizeModelSelect, testModelSelect } = useModelSelectors()
 
 const {
@@ -217,7 +176,6 @@ const {
   testModelSelect
 })
 
-/* ---------- PROMPT OPTIMIZER COMPOSABLE ---------- */
 const {
   prompt,
   optimizedPrompt,
@@ -241,7 +199,6 @@ const {
   selectedTestModel
 )
 
-/* ---------- HISTORY ---------- */
 const {
   history,
   handleSelectHistory: handleSelectHistoryBase,
@@ -273,7 +230,6 @@ const {
   handleDeleteChainBase
 )
 
-/* ---------- TEMPLATE MANAGER ---------- */
 const {
   showTemplates,
   currentType,
@@ -287,7 +243,6 @@ const {
   templateManager
 })
 
-/* ---------- DATA MANAGER ---------- */
 const showDataManager = ref(false)
 
 const handleDataManagerClose = () => {
@@ -298,4 +253,26 @@ const handleDataImported = () => {
   toast.success(t('dataManager.import.successWithRefresh'))
   setTimeout(() => window.location.reload(), 1000)
 }
+
+const isProUser = false; // <- Replace with real check
+const isProTemplate = (template) =>
+  template?.isPro === true || template?.access === 'pro';
+
+const tryOptimize = () => {
+  const templateObj =
+    typeof selectedOptimizeTemplate === 'string'
+      ? templateManager.getTemplateById('optimize', selectedOptimizeTemplate)
+      : selectedOptimizeTemplate;
+
+  if (isProTemplate(templateObj) && !isProUser) {
+    toast.error("This is a Pro template. Please upgrade to use it.");
+    return;
+  }
+
+  handleOptimizePrompt();
+};
+
+const upgradeToPro = () => {
+  window.open("https://your-stripe-link.com", "_blank");
+};
 </script>
