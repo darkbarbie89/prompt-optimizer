@@ -268,10 +268,10 @@ const tryOptimize = () => {
       : selectedOptimizeTemplate;
   
    toast.info('🔍 tryOptimize is running');  // ✅ Add this to visually confirm it's executing
-
-  /* ─── 🔍 DEBUG LOGS ─── */
-  console.log('🔍 raw value:', selectedOptimizeTemplate);
-  console.log('🔍 templateObj:', templateObj);
+  
+  console.log('🧠 templateObj.access:', templateObj?.access);
+  console.log('🧠 templateObj.metadata.access:', templateObj?.metadata?.access);
+  console.log('🧠 templateObj:', templateObj);
 
   // Double-check any nesting of access flag
   const isPro =
