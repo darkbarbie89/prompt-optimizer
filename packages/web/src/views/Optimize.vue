@@ -271,6 +271,18 @@ const proIds = [
 const tryOptimize = () => {
   toast.info('🔍 tryOptimize is running');  // debug toast—keep for now
 
+  // 🔍 TEMP — look at the real field names
+  console.log(
+    '📦 keys:',
+    Object.keys(
+      typeof selectedOptimizeTemplate === 'object'
+        ? selectedOptimizeTemplate
+        : {}
+    )
+  );
+
+  // (leave the rest of the function as-is)
+
   
   // DEBUG – see the real ID string we must lock
   const templateId =
