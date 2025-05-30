@@ -19,6 +19,7 @@
       <div class="flex-none">
         <InputPanelUI
           v-model="prompt"
+          v-model:selectedTemplate="selectedOptimizeTemplate"
           v-model:selectedModel="selectedOptimizeModel"
           :label="$t('promptOptimizer.originalPrompt')"
           :placeholder="$t('promptOptimizer.inputPlaceholder')"
@@ -144,6 +145,17 @@ import {
   templateManager,
   historyManager
 } from '@prompt-optimizer/ui'
+  const proTemplateIds = [
+  'seo-article-writer',
+  'resume-builder',
+  'cover-letter-coach',
+  'product-description',
+  'yt-script-writer',
+  'business-idea-tester',
+  'ad-copy-writer',
+  'habit-coach'
+];
+
 
 /* ---------- THEME ---------- */
 onMounted(() => {
@@ -274,28 +286,22 @@ const proIds = [
 ]
 
 const tryOptimize = () => {
-  toast.info('🔍 tryOptimize is running')        // debug toast
-
-  // Unwrap Vue ref to get actual selection value
-  const rawSelection = unref(selectedOptimizeTemplate)
-
-  // Always reduce to a plain ID string
   const templateId =
-    typeof rawSelection === 'string'
-      ? rawSelection
-      : rawSelection?.id ?? rawSelection?.templateId ?? 'UNKNOWN'
+    typeof selectedOptimizeTemplate === 'string'
+      ? selectedOptimizeTemplate
+      : selectedOptimizeTemplate?.id;
 
-  console.log('🆔 templateId:', templateId)      // keep for sanity
+  console.log('🆔 templateId:', templateId);
 
-  // 🔒 Block if template is Pro and user isn’t
-  if (proIds.includes(templateId) && !isProUser) {
-    toast.error('This is a Pro template. Please upgrade to use it.')
-    return
+  const isPro = proTemplateIds.includes(templateId);
+
+  if (isPro && !isProUser) {
+    toast.error('🚫 This is a Pro template. Please upgrade to use it.');
+    return;
   }
 
-  // ✅ Run optimisation for free templates or Pro users
-  handleOptimizePrompt()
-}
+  handleOptimizePrompt();
+};
 
 const upgradeToPro = () => {
   window.open('https://your-stripe-link.com', '_blank')
