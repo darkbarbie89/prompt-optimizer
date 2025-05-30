@@ -127,13 +127,22 @@
 <script setup lang="ts">
 
 const isProUser = false; // ← Update this logic later when you have real auth
-const isProTemplate = (template) => template?.isPro === true;
+const isProTemplate = (template) =>
+  template?.isPro === true || template?.access === 'pro';
 
 const tryOptimize = () => {
-  if (isProTemplate(selectedOptimizeTemplate) && !isProUser) {
+  // Ensure we have the full template object even if the dropdown returns an ID
+  const templateObj =
+    typeof selectedOptimizeTemplate === 'string'
+      ? templateManager.getTemplateById('optimize', selectedOptimizeTemplate)
+      : selectedOptimizeTemplate;
+
+  if (isProTemplate(templateObj) && !isProUser) {
     toast.error("This is a Pro template. Please upgrade to use it.");
     return;
   }
+  handleOptimizePrompt();
+}
   handleOptimizePrompt();
 };
 
