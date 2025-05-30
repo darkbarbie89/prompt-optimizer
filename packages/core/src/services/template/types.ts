@@ -18,8 +18,10 @@ export interface Template {
   id: string;              // 提示词唯一标识
   name: string;            // 提示词名称
   content: string;         // 提示词内容
-  metadata: TemplateMetadata;
+  metadata?: TemplateMetadata;
   isBuiltin?: boolean;     // 是否为内置提示词
+  description?: string
+  access?: 'free' | 'pro'
 }
 
 /**
