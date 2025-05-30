@@ -254,40 +254,40 @@ const handleDataImported = () => {
   setTimeout(() => window.location.reload(), 1000)
 }
 
-/* ----------  PRO-LOCK & SUBMIT HANDLER  ---------- */
+/* ------------  SIMPLE, BULLET-PROOF PRO LOCK  ------------ */
 
-const isProUser = false; // ← change later when you have auth
+const isProUser = false;           // ← set to true when the user is paid
 
-// Detect ANY non-public template as Pro
-const isProTemplate = (t: any) =>
-  t?.isPro === true ||                                  // explicit flag
-  (t?.access && t.access !== 'public') ||               // top-level access
-  (t?.metadata?.access && t.metadata.access !== 'public'); // metadata.access
+// 1️⃣  List every template ID you want locked
+const proIds = [
+  'RD',              // Resume & Achievement Writer
+  'seoBlogPost',     // SEO Blog Post Generator
+  'emailPro',        // Professional Email Generator
+  'promptRefiner',   // Prompt Refiner (Pro tips)
+  // add any other Pro template IDs here
+];
 
+// 2️⃣  Submit handler
 const tryOptimize = () => {
-  // 🔸Always resolve to the FULL template object
-  const templateObj =
+  toast.info('🔍 tryOptimize is running');  // debug toast—keep for now
+
+  // Always reduce to an ID string
+  const templateId =
     typeof selectedOptimizeTemplate === 'string'
-      ? templateManager.templates.find(
-          t => t.id === selectedOptimizeTemplate
-        )
-      : selectedOptimizeTemplate;
+      ? selectedOptimizeTemplate
+      : selectedOptimizeTemplate?.id;
 
-  toast.info('🔍 tryOptimize is running'); // debug toast
-  console.log('templateObj:', templateObj); // keep for now
-
-  // Decide if this template is Pro
-  const isPro = isProTemplate(templateObj);
-
-  if (isPro && !isProUser) {
+  // If this template is in the locked list, block free users
+  if (proIds.includes(templateId) && !isProUser) {
     toast.error('This is a Pro template. Please upgrade to use it.');
-    return; // 🔒 block free users
+    return;                                 // 🔒 stop here
   }
 
-  handleOptimizePrompt(); // ✅ allow optimisation
+  handleOptimizePrompt();                   // ✅ run optimisation
 };
 
-/* ----------  end of block  ---------- */
+/* ---------------------------------------------------------- */
+
 
 
 
