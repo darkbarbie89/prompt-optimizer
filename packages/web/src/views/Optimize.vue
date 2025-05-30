@@ -8,12 +8,13 @@
 
     <!-- ───────── action buttons slot ───────── -->
     <template #actions>
-      <ThemeToggleUI />
-      <ActionButtonUI icon="📝" :text="$t('nav.templates')"  @click="openTemplateManager('optimize')" />
-      <ActionButtonUI icon="📜" :text="$t('nav.history')"    @click="showHistory = true" />
-      <ActionButtonUI icon="⚙️" :text="$t('nav.modelManager')" @click="showConfig  = true" />
-      <ActionButtonUI icon="💾" :text="$t('nav.dataManager')"  @click="showDataManager = true" />
-    </template>
+  <ActionButtonUI icon="🚀" text="Upgrade to Pro" @click="upgradeToPro" />
+  <ThemeToggleUI />
+  <ActionButtonUI icon="📝" :text="$t('nav.templates')" @click="openTemplateManager('optimize')" />
+  <ActionButtonUI icon="📜" :text="$t('nav.history')" @click="showHistory = true" />
+  <ActionButtonUI icon="⚙️" :text="$t('nav.modelManager')" @click="showConfig = true" />
+  <ActionButtonUI icon="💾" :text="$t('nav.dataManager')" @click="showDataManager = true" />
+</template>
 
     <!-- ───────── main content ───────── -->
     <ContentCardUI>
@@ -30,7 +31,7 @@
           :loading-text="$t('common.loading')"
           :loading="isOptimizing"
           :disabled="isOptimizing"
-          @submit="handleOptimizePrompt"
+          @submit="tryOptimize"
           @configModel="showConfig = true"
         >
           <!-- model select -->
@@ -124,6 +125,22 @@
 </template>
 
 <script setup lang="ts">
+
+const isProUser = false; // ← Update this logic later when you have real auth
+const isProTemplate = (template) => template?.isPro === true;
+
+const tryOptimize = () => {
+  if (isProTemplate(selectedOptimizeTemplate) && !isProUser) {
+    toast.error("This is a Pro template. Please upgrade to use it.");
+    return;
+  }
+  handleOptimizePrompt();
+};
+
+const upgradeToPro = () => {
+  window.open("https://your-stripe-link.com", "_blank");
+};
+
 import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
