@@ -276,8 +276,6 @@ const handleDataImported = () => {
 
 const isProUser = false  // ← flip to true after payment flow
 
-import { ref, onMounted, unref } from 'vue'; // Make sure 'unref' is imported
-
 const isProUser = false;
 
 const proTemplateIds = [
