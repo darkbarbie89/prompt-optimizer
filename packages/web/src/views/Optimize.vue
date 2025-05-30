@@ -265,12 +265,13 @@ const handleDataImported = () => {
 const isProUser = false  // ← flip to true after payment flow
 
 // 1️⃣  List every template ID that should be locked
-const proIds = [
-  'RD',              // Resume & Achievement Writer
-  'seoBlogPost',     // SEO Blog Post Generator
-  'emailPro',        // Professional Email Generator
-  'promptRefiner'    // Prompt Refiner
-  // ➕ add any additional Pro IDs here
+const proTemplateIds = [
+  'seo-article-writer',
+  'resume-builder',
+  'cover-letter-coach',
+  'email-writer',
+  'yt-script-writer',
+  'ad-copy-writer'
 ]
 
 const tryOptimize = () => {
@@ -300,5 +301,19 @@ const tryOptimize = () => {
 const upgradeToPro = () => {
   window.open('https://your-stripe-link.com', '_blank')
 }
+</script>
+
+watch(selectedOptimizeTemplate, (newVal) => {
+  const rawSelection = unref(newVal);
+  const templateId = typeof rawSelection === 'string'
+    ? rawSelection
+    : rawSelection?.templateId ?? 'UNKNOWN';
+
+  if (proTemplateIds.includes(templateId) && !userIsPro) {
+    toast.error('🚫 This template is for Pro users only.');
+    selectedOptimizeTemplate.value = null;
+    return;
+  }
+});
 </script>
 
