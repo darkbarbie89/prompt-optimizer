@@ -285,11 +285,6 @@ const tryOptimize = () => {
 
   console.log('🆔 templateId:', templateId)      // keep for sanity
 
-  // 🔒 Block if template is Pro and user isn’t
-  if (proIds.includes(templateId) && !isProUser) {
-    toast.error('This is a Pro template. Please upgrade to use it.')
-    return
-  }
 
   // ✅ Run optimisation for free templates or Pro users
   handleOptimizePrompt()
