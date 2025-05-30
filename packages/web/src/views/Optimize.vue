@@ -276,23 +276,41 @@ const handleDataImported = () => {
 
 const isProUser = false  // ← flip to true after payment flow
 
-// 1️⃣  List every template ID that should be locked
-const proIds = [
-  'RD',              // Resume & Achievement Writer
-  'seoBlogPost',     // SEO Blog Post Generator
-  'emailPro',        // Professional Email Generator
-  'promptRefiner'    // Prompt Refiner
-  // ➕ add any additional Pro IDs here
-]
+import { ref, onMounted, unref } from 'vue'; // Make sure 'unref' is imported
+
+const isProUser = false;
+
+const proTemplateIds = [
+  'seo-article-writer',
+  'resume-builder',
+  'cover-letter-coach',
+  'product-description',
+  'yt-script-writer',
+  'business-idea-tester',
+  'ad-copy-writer',
+  'habit-coach',
+];
+
+// Optional debug log to confirm
+onMounted(() => {
+  console.log('🟢 App mounted. Available Pro IDs:', proTemplateIds);
+});
 
 const tryOptimize = () => {
+  toast.info('🔍 tryOptimize is running');
+
+  // Unwrap ref from selected template
+  const rawSelection = unref(selectedOptimizeTemplate);
+
+  // Extract the template ID in any case
   const templateId =
-    typeof selectedOptimizeTemplate === 'string'
-      ? selectedOptimizeTemplate
-      : selectedOptimizeTemplate?.id;
+    typeof rawSelection === 'string'
+      ? rawSelection
+      : rawSelection?.id ?? rawSelection?.templateId ?? 'UNKNOWN';
 
   console.log('🆔 templateId:', templateId);
 
+  // Pro check
   const isPro = proTemplateIds.includes(templateId);
 
   if (isPro && !isProUser) {
@@ -302,6 +320,7 @@ const tryOptimize = () => {
 
   handleOptimizePrompt();
 };
+
 
 const upgradeToPro = () => {
   window.open('https://your-stripe-link.com', '_blank')
