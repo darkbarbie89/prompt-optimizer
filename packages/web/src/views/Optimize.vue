@@ -113,7 +113,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref, onMounted, unref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
   ToastUI,
@@ -145,6 +145,7 @@ import {
   historyManager
 } from '@prompt-optimizer/ui'
 
+/* ---------- THEME ---------- */
 onMounted(() => {
   const savedTheme = localStorage.getItem('theme')
   document.documentElement.classList.remove('dark', 'theme-blue', 'theme-green', 'theme-purple')
@@ -155,12 +156,15 @@ onMounted(() => {
   }
 })
 
+/* ---------- TOAST / I18N ---------- */
 const toast = useToast()
 const { t } = useI18n()
 
+/* ---------- SERVICE INITIALIZATION ---------- */
 const { promptServiceRef } =
   useServiceInitializer(modelManager, templateManager, historyManager)
 
+/* ---------- MODEL SELECTORS & MANAGER ---------- */
 const { optimizeModelSelect, testModelSelect } = useModelSelectors()
 
 const {
@@ -176,6 +180,7 @@ const {
   testModelSelect
 })
 
+/* ---------- PROMPT OPTIMIZER COMPOSABLE ---------- */
 const {
   prompt,
   optimizedPrompt,
@@ -199,6 +204,7 @@ const {
   selectedTestModel
 )
 
+/* ---------- HISTORY ---------- */
 const {
   history,
   handleSelectHistory: handleSelectHistoryBase,
@@ -230,6 +236,7 @@ const {
   handleDeleteChainBase
 )
 
+/* ---------- TEMPLATE MANAGER ---------- */
 const {
   showTemplates,
   currentType,
@@ -243,69 +250,55 @@ const {
   templateManager
 })
 
+/* ---------- DATA MANAGER ---------- */
 const showDataManager = ref(false)
-
-const handleDataManagerClose = () => {
-  showDataManager.value = false
-}
-
+const handleDataManagerClose = () => (showDataManager.value = false)
 const handleDataImported = () => {
   toast.success(t('dataManager.import.successWithRefresh'))
   setTimeout(() => window.location.reload(), 1000)
 }
 
-/* ------------  SIMPLE, BULLET-PROOF PRO LOCK  ------------ */
+/* ------------------------------------------------------------------ */
+/*                    🔒  SIMPLE, BULLET-PROOF PRO LOCK                */
+/* ------------------------------------------------------------------ */
 
-const isProUser = false;           // ← set to true when the user is paid
+const isProUser = false  // ← flip to true after payment flow
 
-// 1️⃣  List every template ID you want locked
+// 1️⃣  List every template ID that should be locked
 const proIds = [
   'RD',              // Resume & Achievement Writer
   'seoBlogPost',     // SEO Blog Post Generator
   'emailPro',        // Professional Email Generator
-  'promptRefiner',   // Prompt Refiner (Pro tips)
-  // add any other Pro template IDs here
-];
+  'promptRefiner'    // Prompt Refiner
+  // ➕ add any additional Pro IDs here
+]
 
-// 2️⃣  Submit handler
 const tryOptimize = () => {
-  toast.info('🔍 tryOptimize is running');  // debug toast—keep for now
+  toast.info('🔍 tryOptimize is running')        // debug toast
 
-  // 🔍 TEMP — look at the real field names
-  console.log(
-    '📦 keys:',
-    Object.keys(
-      typeof selectedOptimizeTemplate === 'object'
-        ? selectedOptimizeTemplate
-        : {}
-    )
-  );
+  // Unwrap Vue ref to get actual selection value
+  const rawSelection = unref(selectedOptimizeTemplate)
 
-  // (leave the rest of the function as-is)
-
-  
-  // DEBUG – see the real ID string we must lock
+  // Always reduce to a plain ID string
   const templateId =
-    typeof selectedOptimizeTemplate === 'string'
-      ? selectedOptimizeTemplate
-      : selectedOptimizeTemplate?.id;
-  console.log('🆔 templateId:', templateId);
+    typeof rawSelection === 'string'
+      ? rawSelection
+      : rawSelection?.id ?? rawSelection?.templateId ?? 'UNKNOWN'
 
+  console.log('🆔 templateId:', templateId)      // keep for sanity
+
+  // 🔒 Block if template is Pro and user isn’t
   if (proIds.includes(templateId) && !isProUser) {
-    toast.error('This is a Pro template. Please upgrade to use it.');
-    return;
+    toast.error('This is a Pro template. Please upgrade to use it.')
+    return
   }
 
-  handleOptimizePrompt();
-};
-
-/* ---------------------------------------------------------- */
-
-
-
-
+  // ✅ Run optimisation for free templates or Pro users
+  handleOptimizePrompt()
+}
 
 const upgradeToPro = () => {
-  window.open("https://your-stripe-link.com", "_blank");
-};
+  window.open('https://your-stripe-link.com', '_blank')
+}
 </script>
+
