@@ -254,46 +254,41 @@ const handleDataImported = () => {
   setTimeout(() => window.location.reload(), 1000)
 }
 
-const isProUser = false; // <- Replace with real check
-const isProTemplate = (template) =>
-  template?.isPro === true ||
-  (template?.access && template?.access !== 'public') ||
-  (template?.metadata?.access && template?.metadata?.access !== 'public');
+/* ----------  PRO-LOCK & SUBMIT HANDLER  ---------- */
 
+const isProUser = false; // ← change later when you have auth
+
+// Detect ANY non-public template as Pro
+const isProTemplate = (t: any) =>
+  t?.isPro === true ||                                  // explicit flag
+  (t?.access && t.access !== 'public') ||               // top-level access
+  (t?.metadata?.access && t.metadata.access !== 'public'); // metadata.access
 
 const tryOptimize = () => {
-  // Ensure we have the full template object (fallback to full list if needed)
-  let templateObj;
-  if (typeof selectedOptimizeTemplate === 'string') {
-    // First try helper
-    templateObj = templateManager.getTemplateById
-      ? templateManager.getTemplateById('optimize', selectedOptimizeTemplate)
-      : undefined;
-    // If helper didn't return object, fallback to direct search in the loaded templates array
-    if (!templateObj || typeof templateObj === 'string') {
-      templateObj = templateManager.templates?.find(t => t.id === selectedOptimizeTemplate) || {};
-    }
-  } else {
-    templateObj = selectedOptimizeTemplate;
-  }
+  // 🔸Always resolve to the FULL template object
+  const templateObj =
+    typeof selectedOptimizeTemplate === 'string'
+      ? templateManager.templates.find(
+          t => t.id === selectedOptimizeTemplate
+        )
+      : selectedOptimizeTemplate;
 
-  toast.info('🔍 tryOptimize is running');
+  toast.info('🔍 tryOptimize is running'); // debug toast
+  console.log('templateObj:', templateObj); // keep for now
 
-  console.log('🧠 templateObj.access:', templateObj?.access);
-  console.log('🧠 templateObj.metadata?.access:', templateObj?.metadata?.access);
-
-  const isPro =
-    templateObj?.isPro === true ||
-    (templateObj?.access && templateObj.access !== 'free' && templateObj.access !== 'public') ||
-    (templateObj?.metadata?.access && templateObj.metadata.access !== 'free' && templateObj.metadata.access !== 'public');
+  // Decide if this template is Pro
+  const isPro = isProTemplate(templateObj);
 
   if (isPro && !isProUser) {
     toast.error('This is a Pro template. Please upgrade to use it.');
-    return;
+    return; // 🔒 block free users
   }
 
-  handleOptimizePrompt();
+  handleOptimizePrompt(); // ✅ allow optimisation
 };
+
+/* ----------  end of block  ---------- */
+
 
 
 
