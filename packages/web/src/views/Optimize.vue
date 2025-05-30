@@ -264,6 +264,8 @@ const tryOptimize = () => {
     typeof selectedOptimizeTemplate === 'string'
       ? templateManager.getTemplateById('optimize', selectedOptimizeTemplate)
       : selectedOptimizeTemplate;
+  
+   toast.info('🔍 tryOptimize is running');  // ✅ Add this to visually confirm it's executing
 
   /* ─── 🔍 DEBUG LOGS ─── */
   console.log('🔍 raw value:', selectedOptimizeTemplate);
