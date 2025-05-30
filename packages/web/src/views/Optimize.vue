@@ -260,23 +260,32 @@ const isProTemplate = (template) =>
   (template?.access && template?.access !== 'public') ||
   (template?.metadata?.access && template?.metadata?.access !== 'public');
 
-const tryOptimize = () => {
-  // Ensure we have the full template object
-  const templateObj =
-    typeof selectedOptimizeTemplate === 'string'
-      ? templateManager.getTemplateById('optimize', selectedOptimizeTemplate)
-      : selectedOptimizeTemplate;
-  
-   toast.info('🔍 tryOptimize is running');  // ✅ Add this to visually confirm it's executing
-  
-  console.log('🧠 templateObj.access:', templateObj?.access);
-  console.log('🧠 templateObj.metadata.access:', templateObj?.metadata?.access);
-  console.log('🧠 templateObj:', templateObj);
 
-  // Double-check any nesting of access flag
+const tryOptimize = () => {
+  // Ensure we have the full template object (fallback to full list if needed)
+  let templateObj;
+  if (typeof selectedOptimizeTemplate === 'string') {
+    // First try helper
+    templateObj = templateManager.getTemplateById
+      ? templateManager.getTemplateById('optimize', selectedOptimizeTemplate)
+      : undefined;
+    // If helper didn't return object, fallback to direct search in the loaded templates array
+    if (!templateObj || typeof templateObj === 'string') {
+      templateObj = templateManager.templates?.find(t => t.id === selectedOptimizeTemplate) || {};
+    }
+  } else {
+    templateObj = selectedOptimizeTemplate;
+  }
+
+  toast.info('🔍 tryOptimize is running');
+
+  console.log('🧠 templateObj.access:', templateObj?.access);
+  console.log('🧠 templateObj.metadata?.access:', templateObj?.metadata?.access);
+
   const isPro =
-    isProTemplate(templateObj) ||
-    templateObj?.metadata?.access === 'pro';
+    templateObj?.isPro === true ||
+    (templateObj?.access && templateObj.access !== 'free' && templateObj.access !== 'public') ||
+    (templateObj?.metadata?.access && templateObj.metadata.access !== 'free' && templateObj.metadata.access !== 'public');
 
   if (isPro && !isProUser) {
     toast.error('This is a Pro template. Please upgrade to use it.');
@@ -285,6 +294,7 @@ const tryOptimize = () => {
 
   handleOptimizePrompt();
 };
+
 
 
 const upgradeToPro = () => {
