@@ -1,4 +1,3 @@
-
 <template>
   <!-- ===== Prompt-Optimizer tool page ===== -->
   <MainLayoutUI>
@@ -45,7 +44,6 @@
            <TemplateSelectUI
              v-model="selectedOptimizeTemplate"
              type="optimize"
-            :templates="templatesWithLockIcons"
             @manage="openTemplateManager('optimize')"
            @select="handleTemplateSelect"
            />
@@ -155,6 +153,80 @@ onMounted(() => {
   } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
     document.documentElement.classList.add('dark')
   }
+  
+  // Try to modify template display in the DOM
+  const modifyTemplateDisplay = () => {
+    console.log('🎨 Attempting to modify template display in DOM...')
+    
+    // Map of template names to check for
+    const proTemplateNames = {
+      'Professional Email Generator': true,
+      'Resume & Achievement Writer': true,
+      'Cover Letter Generator': true,
+      'SEO Blog Post Generator': true,
+      'YouTube Script Generator': true,
+      'Ad Copy Generator': true
+    }
+    
+    // Get all elements and check their text content
+    const allElements = document.querySelectorAll('*')
+    let modified = 0
+    
+    allElements.forEach((el: any) => {
+      // Skip if element has children (to avoid modifying parent containers)
+      if (el.children.length > 0) return
+      
+      const text = el.textContent || ''
+      const trimmedText = text.trim()
+      
+      // Check if this element contains a pro template name
+      Object.keys(proTemplateNames).forEach(templateName => {
+        if (trimmedText === templateName || trimmedText.startsWith(templateName)) {
+          if (!text.includes('🔒')) {
+            console.log('🔒 Found pro template in DOM:', trimmedText)
+            el.textContent = `${text} 🔒`
+            modified++
+          }
+        }
+      })
+    })
+    
+    if (modified > 0) {
+      console.log(`✅ Modified ${modified} template displays`)
+    }
+  }
+  
+  // Try multiple times as dropdown might not be rendered immediately
+  setTimeout(modifyTemplateDisplay, 500)
+  setTimeout(modifyTemplateDisplay, 1000)
+  setTimeout(modifyTemplateDisplay, 1500)
+  setTimeout(modifyTemplateDisplay, 2000)
+  
+  // Also try when clicking anywhere on the document
+  document.addEventListener('click', (e) => {
+    // Only run if clicking near the template select area
+    const target = e.target as HTMLElement
+    if (target.closest('.template-select') || target.closest('[role="combobox"]') || target.closest('[role="listbox"]')) {
+      console.log('👆 Click detected near template selector')
+      setTimeout(modifyTemplateDisplay, 100)
+      setTimeout(modifyTemplateDisplay, 300)
+      setTimeout(modifyTemplateDisplay, 500)
+    }
+  })
+  
+  // Watch for DOM changes (dropdown opening)
+  const observer = new MutationObserver(() => {
+    console.log('👁️ DOM mutation detected')
+    modifyTemplateDisplay()
+  })
+  
+  // Start observing after a delay to ensure component is mounted
+  setTimeout(() => {
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    })
+  }, 1000)
 })
 
 /* ---------- TOAST / I18N ---------- */
@@ -162,8 +234,7 @@ const toast = useToast()
 const { t } = useI18n()
 
 /* ---------- SERVICE INITIALIZATION ---------- */
-const { promptServiceRef } =
-  useServiceInitializer(modelManager, templateManager, historyManager)
+const { promptServiceRef } = useServiceInitializer(modelManager, templateManager, historyManager)
 
 /* ---------- MODEL SELECTORS & MANAGER ---------- */
 const { optimizeModelSelect, testModelSelect } = useModelSelectors()
@@ -251,41 +322,76 @@ const {
   templateManager
 })
 
-// Wrapper to track user interaction
+// Wrapper to track user interaction and modify template display
 const handleTemplateSelect = (template: any) => {
-  hasUserActuallySelectedTemplate.value = true;
-  originalHandleTemplateSelect(template);
-};
-
-/* ---------- CHANGE PRO TEMPLATE BADGES ---------- */
-onMounted(() => {
-  setTimeout(() => {
-    const templates = templateManager.getTemplates?.('optimize') || [];
-    templates.forEach(template => {
-      if (proTemplateIds.includes(template.id)) {
-        template.badge = '🔒 Pro';
-        template.tag = '🔒 Pro';
-        template.label = '🔒 Pro';
-      }
-    });
-  }, 500);
-});
+  hasUserActuallySelectedTemplate.value = true
+  
+  // If it's a pro template, add the lock icon to its display name
+  if (template && (template.access === 'pro' || proTemplateIds.includes(template.id))) {
+    console.log('🔒 Pro template selected, modifying display:', template.id)
+    // Modify the template object to include lock icon
+    const modifiedTemplate = {
+      ...template,
+      name: `${template.name} 🔒`,
+      displayName: `${template.name} 🔒`,
+      label: `${template.name} 🔒`
+    }
+    originalHandleTemplateSelect(modifiedTemplate)
+  } else {
+    originalHandleTemplateSelect(template)
+  }
+}
 
 /* ---------- DATA MANAGER ---------- */
 const showDataManager = ref(false)
 const handleDataManagerClose = () => (showDataManager.value = false)
+
 /* ---------- USER INTERACTION FLAG ---------- */
-const hasUserActuallySelectedTemplate = ref(false);
+const hasUserActuallySelectedTemplate = ref(false)
 
 /* ---------- TEMPLATES WITH LOCK ICONS ---------- */
-const templatesWithLockIcons = computed(() => {
-  const templates = templateManager.getTemplates?.('optimize') || [];
-  return templates.map(template => ({
-    ...template,
-    name: `${template.name}${proTemplateIds.includes(template.id) ? ' 🔒' : ''}`,
-    displayName: `${template.name}${proTemplateIds.includes(template.id) ? ' 🔒' : ''}`
-  }));
-});
+// Since we can't modify templates before they're passed to TemplateSelectUI,
+// we'll use CSS to add visual indicators
+const addLockStyles = () => {
+  const style = document.createElement('style')
+  style.textContent = `
+    /* Add lock icon using CSS for pro templates */
+    [data-template-id="seo-article-writer"]::after,
+    [data-template-id="resume-builder"]::after,
+    [data-template-id="cover-letter-coach"]::after,
+    [data-template-id="email-writer"]::after,
+    [data-template-id="yt-script-writer"]::after,
+    [data-template-id="ad-copy-writer"]::after {
+      content: " 🔒";
+      margin-left: 4px;
+    }
+    
+    /* Alternative selectors if data attributes aren't used */
+    .template-item:has([title*="Resume & Achievement Writer"])::after,
+    .template-item:has([title*="Professional Email Generator"])::after,
+    .template-item:has([title*="Cover Letter Generator"])::after,
+    .template-item:has([title*="SEO Blog Post Generator"])::after,
+    .template-item:has([title*="YouTube Script Generator"])::after,
+    .template-item:has([title*="Ad Copy Generator"])::after {
+      content: " 🔒";
+      margin-left: 4px;
+    }
+  `
+  document.head.appendChild(style)
+}
+
+onMounted(() => {
+  addLockStyles()
+})
+
+// Watch for when templates are loaded
+watch(() => templateManager.getTemplates?.('optimize'), (newTemplates) => {
+  if (newTemplates && newTemplates.length > 0) {
+    console.log('📋 Templates loaded in component:', newTemplates.length)
+    console.log('🔍 First template:', newTemplates[0])
+    console.log('🔍 Pro templates found:', newTemplates.filter((t: any) => t.access === 'pro' || proTemplateIds.includes(t.id)).map((t: any) => t.id))
+  }
+}, { immediate: true })
 
 const handleDataImported = () => {
   toast.success(t('dataManager.import.successWithRefresh'))
@@ -296,10 +402,9 @@ const handleDataImported = () => {
 /*                    🔒  SIMPLE, BULLET-PROOF PRO LOCK                */
 /* ------------------------------------------------------------------ */
 
+const userIsPro = localStorage.getItem('userPlan') === 'pro'
 
-const userIsPro = localStorage.getItem('userPlan') === 'pro';
-
-// 1️⃣  List every template ID that should be locked
+// List every template ID that should be locked
 const proTemplateIds = [
   'seo-article-writer',
   'resume-builder',
@@ -309,20 +414,21 @@ const proTemplateIds = [
   'ad-copy-writer'
 ]
 
+console.log('🔐 Pro template IDs configured:', proTemplateIds)
 
 const upgradeToPro = () => {
   window.open('https://your-stripe-link.com', '_blank')
-};
+}
 
 // Add this helper function before your watcher
-const extractTemplateId = (templateValue) => {
-  console.log('🔍 Extracting from:', templateValue);
+const extractTemplateId = (templateValue: any) => {
+  console.log('🔍 Extracting from:', templateValue)
   
-  if (!templateValue) return null;
+  if (!templateValue) return null
   
   // If it's a string, return as-is
   if (typeof templateValue === 'string') {
-    return templateValue;
+    return templateValue
   }
   
   // If it's an object, try common property names
@@ -330,42 +436,40 @@ const extractTemplateId = (templateValue) => {
     const possibleKeys = [
       'templateId', 'id', 'value', 'key', 'name', 
       'template_id', 'template', 'identifier'
-    ];
+    ]
     
     for (const key of possibleKeys) {
       if (templateValue[key]) {
-        console.log(`✅ Found template ID "${templateValue[key]}" using key "${key}"`);
-        return templateValue[key];
+        console.log(`✅ Found template ID "${templateValue[key]}" using key "${key}"`)
+        return templateValue[key]
       }
     }
     
     // If no standard keys found, log the structure
-    console.warn('⚠️ No template ID found in object:', Object.keys(templateValue));
+    console.warn('⚠️ No template ID found in object:', Object.keys(templateValue))
   }
   
-  return null;
-};
+  return null
+}
 
 // Replace your existing watcher with this:
 watch(selectedOptimizeTemplate, (newVal) => {
-  const raw = unref(newVal);
-  const templateId = extractTemplateId(raw);
+  const raw = unref(newVal)
+  const templateId = extractTemplateId(raw)
   
-  console.log('🪪 Selected template ID:', templateId);
-  console.log('🪪 User selected:', hasUserActuallySelectedTemplate.value);
+  console.log('🪪 Selected template ID:', templateId)
+  console.log('🪪 User selected:', hasUserActuallySelectedTemplate.value)
 
   if (!templateId) {
-    hasUserActuallySelectedTemplate.value = false;
-    return;
+    hasUserActuallySelectedTemplate.value = false
+    return
   }
 
   if (proTemplateIds.includes(templateId) && !userIsPro && hasUserActuallySelectedTemplate.value) {
-    toast.error('🚫 This template is for Pro users only.');
-    selectedOptimizeTemplate.value = null;
-    hasUserActuallySelectedTemplate.value = false;
-    return;
+    toast.error('🚫 This template is for Pro users only. Please upgrade to access premium templates.')
+    selectedOptimizeTemplate.value = null
+    hasUserActuallySelectedTemplate.value = false
+    return
   }
-
-});
+})
 </script>
-
