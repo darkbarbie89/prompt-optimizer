@@ -257,6 +257,27 @@ const handleTemplateSelect = (template: any) => {
   originalHandleTemplateSelect(template);
 };
 
+/* ---------- ADD LOCK ICONS TO PRO TEMPLATES ---------- */
+onMounted(() => {
+  setTimeout(() => {
+    // Get all templates and add lock icons to Pro ones
+    const templates = templateManager.getTemplates?.('optimize') || [];
+    templates.forEach(template => {
+      if (proTemplateIds.includes(template.id)) {
+        // Remove existing lock icon if present, then add it
+        const cleanName = template.name.replace(' 🔒', '');
+        template.name = `${cleanName} 🔒`;
+        
+        // Also update displayName if it exists
+        if (template.displayName) {
+          const cleanDisplayName = template.displayName.replace(' 🔒', '');
+          template.displayName = `${cleanDisplayName} 🔒`;
+        }
+      }
+    });
+  }, 500);
+});
+
 /* ---------- DATA MANAGER ---------- */
 const showDataManager = ref(false)
 const handleDataManagerClose = () => (showDataManager.value = false)
