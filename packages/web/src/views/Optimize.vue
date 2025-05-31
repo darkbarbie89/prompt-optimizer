@@ -280,13 +280,55 @@ const upgradeToPro = () => {
   window.open('https://your-stripe-link.com', '_blank')
 };
 
+// Add this helper function before your watcher
+const extractTemplateId = (templateValue) => {
+  console.log('🔍 Extracting from:', templateValue);
+  
+  if (!templateValue) return null;
+  
+  // If it's a string, return as-is
+  if (typeof templateValue === 'string') {
+    return templateValue;
+  }
+  
+  // If it's an object, try common property names
+  if (typeof templateValue === 'object') {
+    const possibleKeys = [
+      'templateId', 'id', 'value', 'key', 'name', 
+      'template_id', 'template', 'identifier'
+    ];
+    
+    for (const key of possibleKeys) {
+      if (templateValue[key]) {
+        console.log(`✅ Found template ID "${templateValue[key]}" using key "${key}"`);
+        return templateValue[key];
+      }
+    }
+    
+    // If no standard keys found, log the structure
+    console.warn('⚠️ No template ID found in object:', Object.keys(templateValue));
+  }
+  
+  return null;
+};
+
+// Replace your existing watcher with this:
 watch(selectedOptimizeTemplate, (newVal) => {
   const raw = unref(newVal);
-  const templateId = typeof raw === 'string'
-    ? raw
-    : raw?.templateId ?? 'UNKNOWN';
-
+  
+  // Enhanced debugging - you can remove these after fixing
+  console.log('🔍 Raw selectedOptimizeTemplate:', raw);
+  console.log('🔍 Type:', typeof raw);
+  console.log('🔍 Full object structure:', JSON.stringify(raw, null, 2));
+  
+  const templateId = extractTemplateId(raw);
+  
   console.log('🪪 Selected template ID:', templateId);
+
+  if (!templateId) {
+    console.log('ℹ️ No template selected');
+    return;
+  }
 
   if (proTemplateIds.includes(templateId) && !userIsPro) {
     toast.error('🚫 This template is for Pro users only.');
@@ -294,7 +336,6 @@ watch(selectedOptimizeTemplate, (newVal) => {
     return;
   }
 
-  handleOptimizePrompt(); // only if needed
+  handleOptimizePrompt();
 });
 </script>
-
