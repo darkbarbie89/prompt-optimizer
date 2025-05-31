@@ -42,13 +42,14 @@
           </template>
 
           <template #template-select>
-            <TemplateSelectUI
-              v-model="selectedOptimizeTemplate"
-              type="optimize"
-              @manage="openTemplateManager('optimize')"
-              @select="handleTemplateSelect"
-            />
-          </template>
+           <TemplateSelectUI
+             v-model="selectedOptimizeTemplate"
+             type="optimize"
+            :templates="templatesWithLockIcons"
+            @manage="openTemplateManager('optimize')"
+           @select="handleTemplateSelect"
+           />
+         </template>
         </InputPanelUI>
       </div>
 
@@ -113,7 +114,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, unref, watch } from 'vue'
+import { ref, onMounted, unref, watch, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
   ToastUI,
@@ -261,6 +262,17 @@ const showDataManager = ref(false)
 const handleDataManagerClose = () => (showDataManager.value = false)
 /* ---------- USER INTERACTION FLAG ---------- */
 const hasUserActuallySelectedTemplate = ref(false);
+
+/* ---------- TEMPLATES WITH LOCK ICONS ---------- */
+const templatesWithLockIcons = computed(() => {
+  const templates = templateManager.getTemplates?.('optimize') || [];
+  return templates.map(template => ({
+    ...template,
+    name: `${template.name}${proTemplateIds.includes(template.id) ? ' 🔒' : ''}`,
+    displayName: `${template.name}${proTemplateIds.includes(template.id) ? ' 🔒' : ''}`
+  }));
+});
+
 const handleDataImported = () => {
   toast.success(t('dataManager.import.successWithRefresh'))
   setTimeout(() => window.location.reload(), 1000)
