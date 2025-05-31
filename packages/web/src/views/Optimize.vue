@@ -313,20 +313,14 @@ const extractTemplateId = (templateValue) => {
 };
 
 // Replace your existing watcher with this:
-watch(selectedOptimizeTemplate, (newVal) => {
+watch(selectedOptimizeTemplate, (newVal, oldVal) => {
   const raw = unref(newVal);
-  
-  // Enhanced debugging - you can remove these after fixing
-  console.log('🔍 Raw selectedOptimizeTemplate:', raw);
-  console.log('🔍 Type:', typeof raw);
-  console.log('🔍 Full object structure:', JSON.stringify(raw, null, 2));
-  
   const templateId = extractTemplateId(raw);
   
   console.log('🪪 Selected template ID:', templateId);
 
-  if (!templateId) {
-    console.log('ℹ️ No template selected');
+  // Skip if no template or if this is initial load
+  if (!templateId || (!oldVal && !newVal)) {
     return;
   }
 
@@ -337,5 +331,5 @@ watch(selectedOptimizeTemplate, (newVal) => {
   }
 
   handleOptimizePrompt();
-});
+}, { immediate: false });
 </script>
