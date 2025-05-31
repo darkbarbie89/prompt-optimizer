@@ -352,9 +352,6 @@ watch(selectedOptimizeTemplate, (newVal) => {
     return;
   }
 
-  if (hasUserActuallySelectedTemplate.value) {
-    handleOptimizePrompt();
-  }
 });
 </script>
 
