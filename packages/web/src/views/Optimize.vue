@@ -240,7 +240,7 @@ const {
 const {
   showTemplates,
   currentType,
-  handleTemplateSelect,
+  handleTemplateSelect: originalHandleTemplateSelect,
   openTemplateManager,
   handleTemplateManagerClose
 } = useTemplateManager({
@@ -250,9 +250,17 @@ const {
   templateManager
 })
 
+// Wrapper to track user interaction
+const handleTemplateSelect = (template: any) => {
+  hasUserActuallySelectedTemplate.value = true;
+  originalHandleTemplateSelect(template);
+};
+
 /* ---------- DATA MANAGER ---------- */
 const showDataManager = ref(false)
 const handleDataManagerClose = () => (showDataManager.value = false)
+/* ---------- USER INTERACTION FLAG ---------- */
+const hasUserActuallySelectedTemplate = ref(false);
 const handleDataImported = () => {
   toast.success(t('dataManager.import.successWithRefresh'))
   setTimeout(() => window.location.reload(), 1000)
@@ -313,23 +321,28 @@ const extractTemplateId = (templateValue) => {
 };
 
 // Replace your existing watcher with this:
-watch(selectedOptimizeTemplate, (newVal, oldVal) => {
+watch(selectedOptimizeTemplate, (newVal) => {
   const raw = unref(newVal);
   const templateId = extractTemplateId(raw);
   
   console.log('🪪 Selected template ID:', templateId);
+  console.log('🪪 User selected:', hasUserActuallySelectedTemplate.value);
 
-  // Skip if no template or if this is initial load
-  if (!templateId || (!oldVal && !newVal)) {
+  if (!templateId) {
+    hasUserActuallySelectedTemplate.value = false;
     return;
   }
 
-  if (proTemplateIds.includes(templateId) && !userIsPro) {
+  if (proTemplateIds.includes(templateId) && !userIsPro && hasUserActuallySelectedTemplate.value) {
     toast.error('🚫 This template is for Pro users only.');
     selectedOptimizeTemplate.value = null;
+    hasUserActuallySelectedTemplate.value = false;
     return;
   }
 
-  handleOptimizePrompt();
-}, { immediate: false });
+  if (hasUserActuallySelectedTemplate.value) {
+    handleOptimizePrompt();
+  }
+});
 </script>
+
