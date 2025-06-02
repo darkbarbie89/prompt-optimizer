@@ -2,7 +2,11 @@
   <!-- ===== Prompt-Optimizer tool page ===== -->
   <MainLayoutUI>
     <template #title>
-      {{ $t('promptOptimizer.title') }}
+      <router-link to="/" class="flex items-center hover:opacity-80 transition-opacity">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+        </svg>
+      </router-link>
     </template>
 
     <template #actions>
@@ -44,6 +48,7 @@
            <TemplateSelectUI
              v-model="selectedOptimizeTemplate"
              type="optimize"
+            :templates="templatesWithLockIcons"
             @manage="openTemplateManager('optimize')"
            @select="handleTemplateSelect"
            />
@@ -153,6 +158,14 @@ onMounted(() => {
   } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
     document.documentElement.classList.add('dark')
   }
+  
+  // Hide the purple logo img
+  setTimeout(() => {
+    const logo = document.querySelector('img.h-8.w-8.rounded-lg')
+    if (logo) {
+      (logo as HTMLElement).style.display = 'none'
+    }
+  }, 100)
   
   // Try to modify template display in the DOM
   const modifyTemplateDisplay = () => {
@@ -322,24 +335,10 @@ const {
   templateManager
 })
 
-// Wrapper to track user interaction and modify template display
+// Wrapper to track user interaction
 const handleTemplateSelect = (template: any) => {
   hasUserActuallySelectedTemplate.value = true
-  
-  // If it's a pro template, add the lock icon to its display name
-  if (template && (template.access === 'pro' || proTemplateIds.includes(template.id))) {
-    console.log('🔒 Pro template selected, modifying display:', template.id)
-    // Modify the template object to include lock icon
-    const modifiedTemplate = {
-      ...template,
-      name: `${template.name} 🔒`,
-      displayName: `${template.name} 🔒`,
-      label: `${template.name} 🔒`
-    }
-    originalHandleTemplateSelect(modifiedTemplate)
-  } else {
-    originalHandleTemplateSelect(template)
-  }
+  originalHandleTemplateSelect(template)
 }
 
 /* ---------- DATA MANAGER ---------- */
@@ -350,48 +349,14 @@ const handleDataManagerClose = () => (showDataManager.value = false)
 const hasUserActuallySelectedTemplate = ref(false)
 
 /* ---------- TEMPLATES WITH LOCK ICONS ---------- */
-// Since we can't modify templates before they're passed to TemplateSelectUI,
-// we'll use CSS to add visual indicators
-const addLockStyles = () => {
-  const style = document.createElement('style')
-  style.textContent = `
-    /* Add lock icon using CSS for pro templates */
-    [data-template-id="seo-article-writer"]::after,
-    [data-template-id="resume-builder"]::after,
-    [data-template-id="cover-letter-coach"]::after,
-    [data-template-id="email-writer"]::after,
-    [data-template-id="yt-script-writer"]::after,
-    [data-template-id="ad-copy-writer"]::after {
-      content: " 🔒";
-      margin-left: 4px;
-    }
-    
-    /* Alternative selectors if data attributes aren't used */
-    .template-item:has([title*="Resume & Achievement Writer"])::after,
-    .template-item:has([title*="Professional Email Generator"])::after,
-    .template-item:has([title*="Cover Letter Generator"])::after,
-    .template-item:has([title*="SEO Blog Post Generator"])::after,
-    .template-item:has([title*="YouTube Script Generator"])::after,
-    .template-item:has([title*="Ad Copy Generator"])::after {
-      content: " 🔒";
-      margin-left: 4px;
-    }
-  `
-  document.head.appendChild(style)
-}
-
-onMounted(() => {
-  addLockStyles()
+const templatesWithLockIcons = computed(() => {
+  const templates = templateManager.getTemplates?.('optimize') || []
+  return templates.map((template: any) => ({
+    ...template,
+    name: `${template.name}${proTemplateIds.includes(template.id) ? ' 🔒' : ''}`,
+    displayName: `${template.name}${proTemplateIds.includes(template.id) ? ' 🔒' : ''}`
+  }))
 })
-
-// Watch for when templates are loaded
-watch(() => templateManager.getTemplates?.('optimize'), (newTemplates) => {
-  if (newTemplates && newTemplates.length > 0) {
-    console.log('📋 Templates loaded in component:', newTemplates.length)
-    console.log('🔍 First template:', newTemplates[0])
-    console.log('🔍 Pro templates found:', newTemplates.filter((t: any) => t.access === 'pro' || proTemplateIds.includes(t.id)).map((t: any) => t.id))
-  }
-}, { immediate: true })
 
 const handleDataImported = () => {
   toast.success(t('dataManager.import.successWithRefresh'))
@@ -413,8 +378,6 @@ const proTemplateIds = [
   'yt-script-writer',
   'ad-copy-writer'
 ]
-
-console.log('🔐 Pro template IDs configured:', proTemplateIds)
 
 const upgradeToPro = () => {
   window.open('https://your-stripe-link.com', '_blank')
@@ -473,3 +436,10 @@ watch(selectedOptimizeTemplate, (newVal) => {
   }
 })
 </script>
+
+<style scoped>
+/* Hide only the purple logo img */
+:deep(img.h-8.w-8.rounded-lg) {
+  display: none !important;
+}
+</style>
