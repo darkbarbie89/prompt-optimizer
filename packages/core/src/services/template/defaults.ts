@@ -344,7 +344,7 @@ Don’t write the cover letter — just output this optimized prompt.`,
   },
   isBuiltin: true,
   access: 'pro'
-}
+},
 
   'product-description': {
     id: 'product-description',
