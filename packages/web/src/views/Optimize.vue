@@ -125,43 +125,154 @@
       
       <!-- Email Verification Modal -->
       <Teleport to="body">
-        <div v-if="showEmailVerification" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4">
-            <h2 class="text-xl font-bold mb-4">🔐 Activate Pro Access</h2>
-            <p class="text-gray-600 dark:text-gray-300 mb-4">
-              Enter the email you used to purchase Pro access:
-            </p>
-            
-            <input
-              v-model="verificationEmail"
-              type="email"
-              placeholder="your@email.com"
-              class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 mb-2"
-              @keyup.enter="verifyProEmail"
-            />
-            
-            <p v-if="verificationError" class="text-red-500 text-sm mb-4">
-              {{ verificationError }}
-            </p>
-            
-            <p class="text-sm text-gray-500 mb-4">
-              Demo emails: <code>demo@example.com</code> or <code>pro@example.com</code>
-            </p>
-            
-            <div class="flex gap-2">
-              <button
-                @click="verifyProEmail"
-                class="flex-1 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-              >
-                Verify Email
-              </button>
-              <button
-                @click="showEmailVerification = false; verificationError = ''"
-                class="flex-1 bg-gray-300 dark:bg-gray-600 px-4 py-2 rounded-lg hover:bg-gray-400"
-              >
-                Cancel
-              </button>
+        <div v-if="showEmailVerification" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-8 max-w-md w-full">
+            <div class="text-center mb-6">
+              <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full mb-4">
+                <svg class="w-8 h-8 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
+                </svg>
+              </div>
+              <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Activate Pro Access</h2>
+              <p class="text-gray-600 dark:text-gray-300 mt-2">
+                Enter the email you used to purchase Pro
+              </p>
             </div>
+            
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Email Address
+                </label>
+                <input
+                  v-model="verificationEmail"
+                  type="email"
+                  placeholder="your@email.com"
+                  class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
+                  @keyup.enter="verifyProEmail"
+                />
+              </div>
+              
+              <div v-if="verificationError" class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
+                <p class="text-sm text-red-600 dark:text-red-400">{{ verificationError }}</p>
+              </div>
+              
+              <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
+                <p class="text-xs text-gray-500 dark:text-gray-400">
+                  <span class="font-semibold">Demo emails:</span> demo@example.com or pro@example.com
+                </p>
+              </div>
+              
+              <div class="flex gap-3 pt-2">
+                <button
+                  @click="verifyProEmail"
+                  class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg transition-colors"
+                >
+                  Verify Email
+                </button>
+                <button
+                  @click="showEmailVerification = false; verificationError = ''"
+                  class="flex-1 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium px-6 py-3 rounded-lg transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Teleport>
+      
+      <!-- Upgrade Modal -->
+      <Teleport to="body">
+        <div v-if="showUpgradeModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-2xl w-full overflow-hidden">
+            <!-- Header with gradient -->
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-6">
+              <h2 class="text-3xl font-bold text-white">Upgrade to Pro</h2>
+              <p class="text-blue-100 mt-1">Unlock unlimited potential</p>
+            </div>
+            
+            <!-- Content -->
+            <div class="p-8">
+              <!-- Benefits -->
+              <div class="mb-8">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">💎 Pro Plan Benefits</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-green-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <div>
+                      <p class="font-medium text-gray-900 dark:text-white">Unlimited Optimizations</p>
+                      <p class="text-sm text-gray-600 dark:text-gray-400">No more limits on usage</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-green-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <div>
+                      <p class="font-medium text-gray-900 dark:text-white">All Pro Templates</p>
+                      <p class="text-sm text-gray-600 dark:text-gray-400">Access 6+ premium templates</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-green-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <div>
+                      <p class="font-medium text-gray-900 dark:text-white">Priority Support</p>
+                      <p class="text-sm text-gray-600 dark:text-gray-400">Get help when you need it</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-green-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <div>
+                      <p class="font-medium text-gray-900 dark:text-white">Email-based Access</p>
+                      <p class="text-sm text-gray-600 dark:text-gray-400">Use anywhere, anytime</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Demo notice -->
+              <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-6">
+                <p class="text-sm text-blue-800 dark:text-blue-300">
+                  <span class="font-semibold">This is a demo.</span> In production:
+                  <br>• Connects to Stripe for payment
+                  <br>• Automatically adds email to pro list
+                  <br>• Instant activation
+                </p>
+              </div>
+              
+              <!-- Action buttons -->
+              <div class="flex flex-col sm:flex-row gap-3">
+                <button
+                  @click="showUpgradeModal = false; showEmailVerification = true"
+                  class="flex-1 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium px-6 py-3 rounded-lg transition-colors"
+                >
+                  I already purchased
+                </button>
+                <button
+                  @click="showUpgradeModal = false"
+                  class="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium px-6 py-3 rounded-lg transition-all transform hover:scale-105"
+                >
+                  Get Pro Access
+                </button>
+              </div>
+            </div>
+            
+            <!-- Close button -->
+            <button
+              @click="showUpgradeModal = false"
+              class="absolute top-4 right-4 text-white hover:text-gray-200 transition-colors"
+            >
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
           </div>
         </div>
       </Teleport>
@@ -613,38 +724,11 @@ const proTemplateIds = [
 ]
 
 const upgradeToPro = () => {
-  // Show options: buy new or verify existing
-  const message = `
-🚀 Upgrade to Pro - Choose an option:
-
-1️⃣ Already purchased? Click OK to enter your email
-2️⃣ Want to purchase? Click Cancel to see pricing
-
-For demo purposes, use: demo@example.com
-  `
-  
-  if (confirm(message)) {
-    // Show email verification
-    showEmailVerification.value = true
-  } else {
-    // Show purchase info
-    const purchaseInfo = `
-💎 Pro Plan Benefits:
-✅ Unlimited optimizations
-✅ Access to all pro templates
-✅ Priority support
-✅ Email-based access (use anywhere)
-
-This is a demo. In production:
-- Connects to Stripe for payment
-- Automatically adds email to pro list
-- Instant activation
-
-For Flippa buyers: Full integration guide included!
-    `
-    alert(purchaseInfo)
-  }
+  showUpgradeModal.value = true
 }
+
+// Add upgrade modal state
+const showUpgradeModal = ref(false)
 
 // Add this helper function before your watcher
 const extractTemplateId = (templateValue: any) => {
