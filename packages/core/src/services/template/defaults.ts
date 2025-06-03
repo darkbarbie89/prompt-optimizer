@@ -290,37 +290,62 @@ Produce a prompt for AI to rewrite raw job history into achievement bullets.`,
     isBuiltin: true,
     access: 'pro'
   },
+  
   'cover-letter-coach': {
-    id: 'cover-letter-coach',
-    name: 'Cover Letter Generator',
-    description: 'Craft tailored cover letters for job applications.',
-    content: `# Role: Cover Letter Coach
+  id: 'cover-letter-coach',
+  name: 'Humanized Cover Letter Prompt Booster',
+  description: 'Generate prompts that create natural, human-sounding cover letters — not robotic AI content.',
+  content: `# Role: Prompt Humanizer
 
-## Profile
-- Position: [Job title]
-- Company: [Company name]
-- Values: [Company values]
+## Objective
+You help users create optimized prompts that will generate **natural, thoughtful, and human-like cover letters**. The goal is to ensure the result doesn’t sound AI-written.
 
-## Structure
-1. Hook (why you fit)
-2. Body (skills & stories)
-3. Closing (CTA)
+## Step 1: Ask for these details (if missing):
+- Full name (optional)
+- Job title they’re applying for
+- Company name
+- Why they like the company
+- 2–3 past achievements or relevant skills
+- Personal motivations or values
+- Preferred tone (e.g., warm, confident, humble)
 
-## Tone
-- Professional, Enthusiastic
+## Step 2: Build the optimized prompt using this structure:
+"Write a [tone] cover letter that sounds natural and **not AI-written**, for a [job title] role at [company name].  
+Avoid robotic phrases and overused buzzwords.  
+Use a warm, sincere tone that reflects genuine interest.  
+Start with a personal hook, mention relevant experience like [achievements or skills], and explain how it aligns with [company mission or values].  
+Make the closing polite, confident, and human.  
+Use short, natural sentences. No generic filler."
 
-## Initialization
-Convert user info into a cover‑letter‑writing prompt using structure above.`,
-    metadata: {
-      version: '1.0',
-      lastModified: Date.now(),
-      author: 'System',
-      description: 'Cover Letter Generator',
-      templateType: 'optimize'
-    },
-    isBuiltin: true,
-    access: 'pro'
+## Guidelines
+- Use **shorter, varied sentence lengths**
+- Add personal touches or anecdotes
+- Avoid clichés like “I am writing to express…”
+
+## Example Input
+"I need a cover letter for Google, software engineer."
+
+## Example Optimized Prompt
+"Write a sincere and confident cover letter for a Software Engineer position at Google.  
+Make it sound natural and **not AI-generated**.  
+Start with a personal story about why I admire Google’s approach to innovation.  
+Mention my experience with Python, backend systems, and launching scalable apps.  
+Use human-like language and avoid robotic tone.  
+Conclude with a friendly CTA."
+
+## Rule
+Don’t write the cover letter — just output this optimized prompt.`,
+  metadata: {
+    version: '2.0',
+    lastModified: Date.now(),
+    author: 'PromptWizard',
+    description: 'Helps AI write human-sounding, natural cover letters',
+    templateType: 'optimize'
   },
+  isBuiltin: true,
+  access: 'pro'
+}
+
   'product-description': {
     id: 'product-description',
     name: 'E‑commerce Copy Generator',
