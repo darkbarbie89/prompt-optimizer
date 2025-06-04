@@ -53,6 +53,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      lucide-vue-next:
+        specifier: ^0.512.0
+        version: 0.512.0(vue@3.5.13(typescript@5.8.2))
       memoize-one:
         specifier: ^6.0.0
         version: 6.0.0
@@ -68,6 +71,9 @@ importers:
       vue-router:
         specifier: '4'
         version: 4.5.1(vue@3.5.13(typescript@5.8.2))
+      vue3-carousel:
+        specifier: ^0.15.1
+        version: 0.15.1(vue@3.5.13(typescript@5.8.2))
       zod:
         specifier: ^3.22.4
         version: 3.24.2
@@ -2363,6 +2369,11 @@ packages:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
     engines: {node: '>=10'}
 
+  lucide-vue-next@0.512.0:
+    resolution: {integrity: sha512-FNZSsb/0ieJ1b10B3HjGFNGPXOtVEeKqSeEW/m2Is5hy7CrkkBTrTMloTw9tQ3pitfMwvAHLg5MnhWJLULKr1w==}
+    peerDependencies:
+      vue: '>=3.0.1'
+
   magic-string@0.30.17:
     resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
 
@@ -3326,6 +3337,11 @@ packages:
     resolution: {integrity: sha512-ogAF3P97NPm8fJsE4by9dwSYtDwXIY1nFY9T6DyQnGHd1E2Da94w9JIolpe42LJGIl0DwOHBi8TcRPlPGwbTtw==}
     peerDependencies:
       vue: ^3.2.0
+
+  vue3-carousel@0.15.1:
+    resolution: {integrity: sha512-nV2ChLZtgAOikmls8WaVe37vO4Wagk4RYawePHIvXrFtduFnQODyzPx8MmXaAb6l+ka72yAi04ZeCyciiyJMyA==}
+    peerDependencies:
+      vue: ^3.5.0
 
   vue@3.5.13:
     resolution: {integrity: sha512-wmeiSMxkZCSc+PM2w2VRsOYAZC8GdipNFRTsLSfodVqI9mbejKeXEGr8SckuLnrQPGe3oJN5c3K0vpoU9q/wCQ==}
@@ -5676,6 +5692,10 @@ snapshots:
     dependencies:
       yallist: 4.0.0
 
+  lucide-vue-next@0.512.0(vue@3.5.13(typescript@5.8.2)):
+    dependencies:
+      vue: 3.5.13(typescript@5.8.2)
+
   magic-string@0.30.17:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.0
@@ -6877,6 +6897,10 @@ snapshots:
   vue-router@4.5.1(vue@3.5.13(typescript@5.8.2)):
     dependencies:
       '@vue/devtools-api': 6.6.4
+      vue: 3.5.13(typescript@5.8.2)
+
+  vue3-carousel@0.15.1(vue@3.5.13(typescript@5.8.2)):
+    dependencies:
       vue: 3.5.13(typescript@5.8.2)
 
   vue@3.5.13(typescript@5.7.3):

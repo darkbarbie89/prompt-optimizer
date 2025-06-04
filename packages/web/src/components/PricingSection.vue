@@ -1,49 +1,85 @@
 <template>
-  <section class="py-24 bg-white" id="pricing">
+  <section class="py-24 bg-gradient-to-b from-gray-100 to-white" id="pricing">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-base font-semibold tracking-wide text-indigo-600 uppercase">Simple pricing</h2>
-      <p class="mt-2 text-4xl font-extrabold text-gray-900 sm:text-5xl">Choose the plan that fits you best</p>
-      <p class="mt-4 text-lg text-gray-500">Start with Free, grow with Pro, scale with Enterprise.</p>
+      <h2 class="text-base font-semibold tracking-wide text-indigo-600 uppercase mb-4">Simple pricing</h2>
+      <p class="mt-2 text-4xl font-extrabold text-gray-900 sm:text-5xl mb-6">Choose the plan that fits you best</p>
+      <p class="text-xl text-gray-500 max-w-3xl mx-auto">Start with Free, grow with Pro, scale with Enterprise.</p>
     </div>
 
-    <div class="mt-16 flex flex-col lg:flex-row gap-6 justify-center items-stretch px-4 sm:px-6 lg:px-8">
+    <div class="mt-16 grid grid-cols-1 lg:grid-cols-3 gap-12 px-4 sm:px-6 lg:px-8">
 
       <!-- Free Plan -->
-      <div class="flex-1 bg-white border border-gray-200 rounded-lg shadow-sm p-6">
-        <h3 class="text-lg font-semibold text-gray-900">Free</h3>
-        <p class="mt-1 text-3xl font-bold text-gray-900">$0<span class="text-base font-medium">/month</span></p>
-        <ul class="mt-4 text-sm text-gray-500 space-y-2 text-left">
-          <li>✓ Basic optimizations</li>
-          <li>✓ 1,000 tokens / month</li>
-          <li>✓ Community support</li>
+      <div class="bg-white rounded-2xl shadow-xl p-8 flex flex-col">
+        <h3 class="text-2xl font-semibold text-gray-900 mb-4">Free</h3>
+        <p class="text-5xl font-bold text-gray-900 mb-6">$0<span class="text-2xl font-medium ml-1">/month</span></p>
+        <ul class="text-lg text-gray-600 space-y-4 flex-grow mb-8">
+          <li class="flex items-center">
+            <svg class="w-6 h-6 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Basic optimizations
+          </li>
+          <li class="flex items-center">
+            <svg class="w-6 h-6 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            1,000 tokens / month
+          </li>
+          <li class="flex items-center">
+            <svg class="w-6 h-6 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Community support
+          </li>
         </ul>
-        <button class="mt-6 w-full py-2 px-4 bg-gray-100 hover:bg-gray-200 text-gray-900 rounded-md font-medium">Start Free</button>
+        <RouterLink to="/optimize" class="mt-auto py-3 px-6 bg-gray-800 text-white rounded-xl font-semibold text-lg hover:bg-gray-700 transition duration-200">Start Free</RouterLink>
       </div>
 
       <!-- Pro Plan (Highlighted) -->
-      <div class="flex-1 bg-indigo-50 border-2 border-indigo-600 rounded-lg shadow-lg p-6">
-        <h3 class="text-lg font-semibold text-indigo-700">Pro <span class="ml-2 inline-block bg-indigo-100 text-indigo-600 text-xs font-semibold px-2 py-1 rounded">Most Popular</span></h3>
-        <p class="mt-1 text-3xl font-bold text-gray-900">$9<span class="text-base font-medium">/month</span></p>
-        <ul class="mt-4 text-sm text-gray-700 space-y-2 text-left">
-          <li>✓ Unlimited optimizations</li>
-          <li>✓ All advanced templates</li>
-          <li>✓ 50,000 tokens / month</li>
-          <li>✓ Priority e-mail support</li>
+      <div class="bg-indigo-600 rounded-2xl shadow-2xl p-8 flex flex-col scale-105 transform origin-bottom">
+        <h3 class="text-2xl font-semibold text-white flex items-center justify-center mb-4">
+          Pro
+          <span class="ml-3 inline-block bg-indigo-800 text-white text-sm font-semibold px-3 py-1 rounded-full uppercase tracking-wide">Most Popular</span>
+        </h3>
+        <p class="text-5xl font-bold text-white mb-6">$9<span class="text-2xl font-medium ml-1">/month</span></p>
+        <ul class="text-lg text-indigo-100 space-y-4 flex-grow mb-8">
+          <li class="flex items-center">
+            <svg class="w-6 h-6 text-white mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Unlimited optimizations
+          </li>
+          <li class="flex items-center">
+            <svg class="w-6 h-6 text-white mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            All advanced templates
+          </li>
+          <li class="flex items-center">
+            <svg class="w-6 h-6 text-white mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            50,000 tokens / month
+          </li>
+          <li class="flex items-center">
+            <svg class="w-6 h-6 text-white mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Priority e-mail support
+          </li>
         </ul>
-        <button class="mt-6 w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium">Upgrade to Pro</button>
+        <RouterLink to="/optimize" class="mt-auto py-3 px-6 bg-white text-indigo-700 rounded-xl font-semibold text-lg hover:bg-indigo-50 transition duration-200">Upgrade to Pro</RouterLink>
       </div>
 
       <!-- Enterprise Plan -->
-      <div class="flex-1 bg-white border border-gray-200 rounded-lg shadow-sm p-6">
-        <h3 class="text-lg font-semibold text-gray-900">Enterprise</h3>
-        <p class="mt-1 text-3xl font-bold text-gray-900">$49<span class="text-base font-medium">/month</span></p>
-        <ul class="mt-4 text-sm text-gray-500 space-y-2 text-left">
-          <li>✓ Unlimited tokens</li>
-          <li>✓ API access</li>
-          <li>✓ Team accounts (5+ users)</li>
-          <li>✓ Dedicated support</li>
+      <div class="bg-white rounded-2xl shadow-xl p-8 flex flex-col">
+        <h3 class="text-2xl font-semibold text-gray-900 mb-4">Enterprise</h3>
+        <p class="text-5xl font-bold text-gray-900 mb-6">$49<span class="text-2xl font-medium ml-1">/month</span></p>
+        <ul class="text-lg text-gray-600 space-y-4 flex-grow mb-8">
+          <li class="flex items-center">
+            <svg class="w-6 h-6 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Unlimited tokens
+          </li>
+          <li class="flex items-center">
+            <svg class="w-6 h-6 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            API access
+          </li>
+          <li class="flex items-center">
+            <svg class="w-6 h-6 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Team accounts (5+ users)
+          </li>
+          <li class="flex items-center">
+            <svg class="w-6 h-6 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Dedicated support
+          </li>
         </ul>
-        <button class="mt-6 w-full py-2 px-4 bg-gray-900 hover:bg-gray-800 text-white rounded-md font-medium">Contact Sales</button>
+        <RouterLink to="/optimize" class="mt-auto py-3 px-6 bg-gray-800 text-white rounded-xl font-semibold text-lg hover:bg-gray-700 transition duration-200">Contact Sales</RouterLink>
       </div>
 
     </div>
@@ -51,4 +87,5 @@
 </template>
 
 <script setup lang="ts">
+import { RouterLink } from 'vue-router';
 </script>
