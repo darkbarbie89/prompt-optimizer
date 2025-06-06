@@ -7,7 +7,7 @@
 <template>
   <!-- Radial fade + gentle diagonal highlight -->
   <section
-    class="relative isolate overflow-hidden bg-white pt-24 sm:pt-32 pb-32
+    class="relative isolate overflow-hidden bg-white pt-40 sm:pt-52 pb-32
          before:absolute before:inset-0 before:-z-10
          before:bg-[radial-gradient(ellipse_at_top,_rgba(147,197,253,0.35),_transparent_70%)]
          after:absolute after:-z-10 after:inset-0
@@ -16,11 +16,10 @@
     <!-- Copy block -->
     <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
       <h1 class="mt-2 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-6xl text-center">
-  Experience the <span class="bg-gradient-to-r from-fuchsia-500 to-orange-500 bg-clip-text text-transparent">
-    Prompt&nbsp;Optimizer
-      </span>
+        Experience the <span class="bg-gradient-to-r from-fuchsia-500 to-orange-500 bg-clip-text text-transparent">
+          Prompt&nbsp;Amplifier
+        </span>
       </h1>
-
 
       <p class="mt-6 text-lg leading-8 text-gray-600">
         Super-charge your AI prompts with structure, clarity and strategy — in&nbsp;seconds, not hours.
@@ -55,12 +54,9 @@
       <!-- ⚠️ Replace the path below if your asset lives elsewhere -->
       <img
         src="@/assets/prompt-optimizer-ui.png"
-        alt="Prompt Optimizer UI screenshot"
+        alt="Prompt Amplifier UI screenshot"
         class="mx-auto w-full max-w-4xl rounded-xl shadow-[0_0_30px_rgba(59,130,246,0.5)] ring-2 ring-blue-400 mb-[-3rem] sm:mb-0"
      />
     </div>
-
-
-</section>
-  
+  </section>
 </template>
