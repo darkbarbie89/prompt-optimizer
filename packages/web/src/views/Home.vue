@@ -1,13 +1,40 @@
 <template>
   <div class="min-h-screen">
-    <!-- Floating Menu Bar -->
-    <div class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 w-auto">
+    <!-- Mobile Menu Bar -->
+    <div class="md:hidden fixed top-4 left-0 right-0 z-50 px-4">
+      <nav class="flex items-center justify-between px-4 py-3 bg-white/90 backdrop-blur-lg rounded-full shadow-lg border border-gray-100">
+        <!-- Logo -->
+        <RouterLink to="/" class="flex-shrink-0">
+          <img 
+            :src="Logo" 
+            alt="Prompt Amplifier" 
+            class="h-7 w-auto"
+          >
+        </RouterLink>
+        
+        <!-- Mobile Menu Button -->
+        <button 
+          @click="mobileMenuOpen = !mobileMenuOpen"
+          class="p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+        >
+          <svg v-if="!mobileMenuOpen" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Desktop Floating Menu Bar -->
+    <div class="hidden md:block fixed top-6 left-1/2 transform -translate-x-1/2 z-50 w-auto">
       <nav class="flex items-center gap-10 px-8 py-3 bg-white/90 backdrop-blur-lg rounded-full shadow-lg border border-gray-100">
         <!-- Logo -->
         <RouterLink to="/" class="flex-shrink-0 group">
           <img 
             :src="Logo" 
-            alt="Prompt Optimizer" 
+            alt="Prompt Amplifier" 
             class="h-8 w-auto transform group-hover:scale-105 transition-transform duration-200"
           >
         </RouterLink>
@@ -27,21 +54,6 @@
       </nav>
     </div>
 
-    <!-- Mobile Floating Menu -->
-    <div class="fixed top-4 right-4 z-50 md:hidden">
-      <button 
-        @click="mobileMenuOpen = !mobileMenuOpen"
-        class="p-3 bg-white/90 backdrop-blur-lg rounded-full shadow-lg border border-gray-100"
-      >
-        <svg v-if="!mobileMenuOpen" class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-        <svg v-else class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-    </div>
-
     <!-- Mobile Menu Dropdown -->
     <Transition
       enter-active-class="transition ease-out duration-200"
@@ -51,14 +63,14 @@
       leave-from-class="opacity-100 scale-100"
       leave-to-class="opacity-0 scale-95"
     >
-      <div v-if="mobileMenuOpen" class="fixed top-16 right-4 z-40 md:hidden">
-        <div class="bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-100 p-2 min-w-[200px]">
+      <div v-if="mobileMenuOpen" class="fixed top-20 right-4 z-40 md:hidden">
+        <div class="bg-white/95 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-100 p-2 min-w-[200px]">
           <RouterLink 
             to="/"
             @click="mobileMenuOpen = false"
             class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors duration-200"
           >
-            <img :src="Logo" alt="Prompt Optimizer" class="h-8 w-auto">
+            <img :src="Logo" alt="Prompt Amplifier" class="h-8 w-auto">
           </RouterLink>
           <a 
             v-for="link in navLinks" 
@@ -101,7 +113,7 @@ import BeforeAfter from "../components/BeforeAfter.vue";
 import FeatureSection from "../components/FeatureSection.vue";
 import PricingSection from "../components/PricingSection.vue";
 import CallToActionSection from "../components/CallToActionSection.vue";
-import Logo from '../assets/prompt.png';
+import Logo from '../assets/Prompt.png';
 
 // Navigation state
 const mobileMenuOpen = ref(false);
