@@ -113,7 +113,7 @@ import BeforeAfter from "../components/BeforeAfter.vue";
 import FeatureSection from "../components/FeatureSection.vue";
 import PricingSection from "../components/PricingSection.vue";
 import CallToActionSection from "../components/CallToActionSection.vue";
-import Logo from '../assets/Prompt.png';
+import Logo from '../assets/prompt.png';
 
 // Navigation state
 const mobileMenuOpen = ref(false);
