@@ -65,13 +65,6 @@
     >
       <div v-if="mobileMenuOpen" class="fixed top-20 right-4 z-40 md:hidden">
         <div class="bg-white/95 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-100 p-2 min-w-[200px]">
-          <RouterLink 
-            to="/"
-            @click="mobileMenuOpen = false"
-            class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors duration-200"
-          >
-            <img :src="Logo" alt="Prompt Amplifier" class="h-8 w-auto">
-          </RouterLink>
           <a 
             v-for="link in navLinks" 
             :key="link.path"
