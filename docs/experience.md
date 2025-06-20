@@ -1,114 +1,109 @@
-# 项目核心经验总结
+# Project Core Experience Summary
 
-## 📋 核心知识点
-- [架构设计](#架构设计) - API集成、模块化结构
-- [错误处理](#错误处理) - 常见问题与解决方案  
-- [测试规范](#测试规范) - 关键测试要点
-- [开发实践](#开发实践) - Vue、工具配置、最佳实践
-- [重要Bug修复](#重要bug修复) - 安全漏洞与性能问题
+## 📋 Core Topics
+- [Architecture Design](#architecture-design) – API integration, modular structure
+- [Error Handling](#error-handling) – Common issues and solutions  
+- [Testing Standards](#testing-standards) – Key testing points
+- [Development Practices](#development-practices) – Vue, tool configs, best practices
+- [Major Bug Fixes](#major-bug-fixes) – Security and performance issues
 
 ---
 
-## 架构设计
+## Architecture Design
 
-### API集成核心原则
+### API Integration Principles
 ```js
-// 统一OpenAI兼容格式
 export default {
   baseURL: "https://api.openai.com/v1", 
   models: ["gpt-4", "gpt-3.5"],
-  apiKey: import.meta.env.VITE_API_KEY // Vite项目必须使用import.meta.env
+  apiKey: import.meta.env.VITE_API_KEY
 }
 ```
 
-### 模块化结构
+### Modular Structure
 ```
 src/
-├─ api/        # API封装层
-├─ services/   # 业务逻辑  
-├─ config/     # 配置管理
-├─ components/ # UI组件
-└─ prompts/    # 提示模板
+├─ api/        # API layer
+├─ services/   # Business logic  
+├─ config/     # Config management
+├─ components/ # UI components
+└─ prompts/    # Prompt templates
 ```
 
-### LLM服务设计要点
-- **接口标准化**: 统一使用OpenAI格式
-- **多服务商兼容**: Provider标识区分
-- **敏感信息管理**: 环境变量+本地加密存储
-- **用户自管理API密钥**: 避免后端开销，保持应用简单性
+### LLM Service Design Notes
+- **Standardized interfaces**: Use OpenAI-compatible format
+- **Multi-provider support**: Identify providers via tags
+- **Sensitive info**: Manage via env vars + local encryption
+- **User-managed API keys**: No backend storage, keep app simple
 
 ---
 
-## 错误处理
+## Error Handling
 
-### 核心处理策略
+### Core Strategy
 ```js
-// 统一错误处理模板
 try {
   await apiCall();
 } catch (err) {
   console.error("[API Error]", err.context);
-  throw new Error("友好的错误提示");
+  throw new Error("Something went wrong. Please try again.");
 }
 ```
 
-### 常见问题速查表
-| 问题 | 解决方案 | 日期 |
-|------|----------|------|
-| 模板ID与模型Key混淆 | 明确功能ID与API Key分离 | 2024-03-22 |
-| 状态同步异常 | 增加状态同步处理函数 | 2024-03-22 |
-| 全局Provider污染 | 显式传递模型参数 | 2024-03-22 |
+### Common Issues Reference
+| Issue | Solution | Date |
+|--------|----------|-------|
+| Template ID and model key confusion | Separate function IDs from API keys | 2024-03-22 |
+| State sync issues | Add state sync handlers | 2024-03-22 |
+| Global provider leakage | Pass model params explicitly | 2024-03-22 |
 
 ---
 
-## 测试规范
+## Testing Standards
 
-### 关键要点
-1. **环境变量**: Vite项目使用 `import.meta.env.VITE_*`
-2. **测试隔离**: 使用动态唯一标识符避免冲突
-3. **错误场景**: 覆盖网络错误、无效Token等异常
-4. **状态管理**: 独立测试数据库、正确清理状态
+### Key Points
+1. **Env variables**: Use `import.meta.env.VITE_*`
+2. **Test isolation**: Use unique IDs to prevent conflicts
+3. **Error scenarios**: Cover network errors, invalid tokens, etc.
+4. **State management**: Test with isolated data, clean state
 
-### 测试模板
+### Test Template
 ```js
-describe("功能测试", () => {
+describe("Feature test", () => {
   beforeEach(() => {
-    // 使用唯一标识符
     testId = `test-${Date.now()}`;
   });
   
-  it("应正确处理异常", async () => {
-    await expect(func()).rejects.toThrow("预期错误");
+  it("should handle errors properly", async () => {
+    await expect(func()).rejects.toThrow("Expected error");
   });
 });
 ```
 
 ---
 
-## 开发实践
+## Development Practices
 
-### Vue开发规范
+### Vue Standards
 ```js
-// ✅ 正确: 组件顶层调用Composable
+// ✅ Correct: Call composables at top level
 const { data } = useFetch();
 
-// ❌ 错误: 生命周期内调用
+// ❌ Incorrect: Call inside lifecycle
 onMounted(() => {
-  const { data } = useFetch(); // 禁止
+  const { data } = useFetch(); 
 });
 ```
 
-### 工具配置
+### Tool Config
 ```bash
-# 常用NPM命令
-npm outdated          # 检查更新
-ncu -u "eslint*"      # 安全更新指定包
-npm run test          # 每次修改后必须执行
+npm outdated
+ncu -u "eslint*"
+npm run test
 ```
 
-### 流式处理最佳实践
+### Stream Processing
 ```js
-// 统一流式处理器
 const handlers = {
   onToken: (token) => result.value += token,
   onComplete: () => isLoading.value = false,
@@ -118,27 +113,24 @@ const handlers = {
 
 ---
 
-## 重要Bug修复
+## Major Bug Fixes
 
-### 安全漏洞修复 (2024-12-20)
-| Bug类型 | 风险等级 | 修复状态 |
-|---------|----------|----------|
-| UI配置导入验证不充分 | 中 | ✅ 已修复 |
-| 数据迁移竞态条件 | 中 | ✅ 已修复 |
-| 测试覆盖缺失 | 高 | ✅ 已修复 |
+### Security Fixes (2024-12-20)
+| Bug Type | Risk | Status |
+|----------|-------|--------|
+| Incomplete UI config import validation | Medium | ✅ Fixed |
+| Data migration race conditions | Medium | ✅ Fixed |
+| Missing test coverage | High | ✅ Fixed |
 
-#### 关键修复示例
+#### Example Fix
 ```ts
-// UI配置导入安全验证
 for (const [key, value] of Object.entries(typedData.userSettings)) {
-  // 白名单验证
   if (!UI_SETTINGS_KEYS.includes(key as any)) {
-    console.warn(`跳过未知的UI配置键: ${key}`);
+    console.warn(`Skipping unknown UI key: ${key}`);
     continue;
   }
-  // 类型验证
   if (typeof value !== 'string') {
-    console.warn(`跳过无效类型 ${key}: ${typeof value}`);
+    console.warn(`Skipping invalid type ${key}: ${typeof value}`);
     continue;
   }
   await this.storage.setItem(key, value);
@@ -147,29 +139,29 @@ for (const [key, value] of Object.entries(typedData.userSettings)) {
 
 ---
 
-## 核心经验要点
+## Key Experience Takeaways
 
-### 配置管理
-- 业务逻辑与API配置解耦
-- 支持动态配置更新
-- 环境变量使用Vite规范
+### Config Management
+- Separate business logic from API configs
+- Support dynamic config updates
+- Follow Vite env var standards
 
-### 错误处理
-- 开发环境保留完整堆栈
-- 生产环境友好提示+日志
-- 统一错误处理机制
+### Error Handling
+- Full stack traces in dev
+- Friendly production messages + logging
+- Centralized error handling
 
-### 测试策略  
-- 测试用例隔离
-- 覆盖边界条件
-- Mock最小必要依赖
+### Testing Strategy
+- Isolate test cases
+- Cover edge cases
+- Mock only what’s necessary
 
-### 安全考虑
-- 输入验证白名单
-- 防止原型污染
-- 数据迁移原子性
+### Security
+- Input whitelisting
+- Prevent prototype pollution
+- Ensure atomic data migrations
 
-### 性能优化
-- 流式处理提升体验
-- 组件懒加载
-- 合理状态管理
+### Performance
+- Use streaming for better UX
+- Lazy load components
+- Manage state efficiently
