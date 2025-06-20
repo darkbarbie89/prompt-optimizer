@@ -1,267 +1,220 @@
-# 项目状态文档
+# Project Status Document
 
-## 1. 项目概述
+## 1. Overview
 
-提示词优化器是一个帮助用户优化AI提示词的工具，支持多种模型和界面形式。包括Web应用和Chrome浏览器插件两种使用方式，采用monorepo结构进行开发。
+Prompt Optimizer is a tool that helps users optimize AI prompts. It supports multiple models and interfaces, including a web app and Chrome extension. Development uses a monorepo structure.
 
-## 2. 总体进度
-- 项目完成度：85%
-- 当前阶段：SDK迁移与性能优化
-- 预计完成时间：4月初
+## 2. Overall Progress
+- Completion: 85%
+- Current phase: SDK migration and performance optimization
+- Estimated completion: Early April
 
-## 3. 功能完成情况
+## 3. Feature Status
 
-### 3.1 核心包（@prompt-optimizer/core）
-- ✅ 基础架构搭建
-  - ✅ 项目结构设计
-  - ✅ 多包工作区配置
-  - ✅ 基础设施搭建
+### 3.1 Core Package (`@prompt-optimizer/core`)
+- ✅ Infrastructure
+  - Project structure design
+  - Multi-package workspace setup
+  - Basic infrastructure
 
-- ✅ 服务迁移与优化
-  - ✅ 从LangChain迁移到原生SDK
-  - ✅ 模型管理服务优化
-  - ✅ 提示词服务优化
-  - ✅ 模板服务完善
-  - ✅ 历史记录服务重构
+- ✅ Service migration & optimization
+  - Migrated from LangChain to native SDK
+  - Optimized model management
+  - Improved prompt service
+  - Enhanced template service
+  - Refactored history service
 
-- ✅ 模型集成
-  - ✅ OpenAI集成
-  - ✅ Gemini集成
-  - ✅ DeepSeek集成
-  - ✅ 自定义API支持
-  - ✅ 流式响应支持
-  - ✅ 错误处理优化
+- ✅ Model integration
+  - OpenAI integration
+  - Gemini integration
+  - DeepSeek integration
+  - Custom API support
+  - Stream response support
+  - Error handling improvements
 
-### 3.2 Web包（@prompt-optimizer/web）
-- ✅ UI重构
-  - ✅ 组件模块化
-  - ✅ UI包抽取
-  - ✅ 服务调用更新
-  - ✅ 错误处理优化
+### 3.2 Web Package (`@prompt-optimizer/web`)
+- ✅ UI refactor
+  - Modular components
+  - Extracted UI package
+  - Updated service calls
+  - Enhanced error handling
 
-- ✅ 功能增强
-  - ✅ 流式响应UI
-  - ✅ 模型连接测试
-  - ✅ 配置验证增强
-  - ✅ Toast组件迁移
-  - ✅ 环境变量加载优化
+- ✅ Feature enhancements
+  - Stream response UI
+  - Model connection test
+  - Config validation improvements
+  - Toast component migration
+  - Env variable loading improvements
 
-### 3.3 Chrome插件（@prompt-optimizer/extension）
-- ✅ 基础框架
-  - ✅ 插件架构设计
-  - ✅ 核心功能移植
-  - ✅ 权限管理
-  - ✅ UI组件复用
-- ✅ 特性开发
-  - ✅ 右键菜单集成
-  - ✅ 快捷键支持
-  - ✅ 历史同步
-  - ✅ 配置管理
+### 3.3 Chrome Extension (`@prompt-optimizer/extension`)
+- ✅ Core framework
+  - Extension architecture
+  - Core feature migration
+  - Permission management
+  - UI component reuse
+- ✅ Features
+  - Context menu integration
+  - Shortcut key support
+  - History sync
+  - Config management
 
-## 4. 进行中的任务
+## 4. Ongoing Tasks
 
-### 4.1 核心功能完善（进度：90%）
-- ✅ 错误处理系统
-  - ✅ 统一错误类型
-  - ✅ 错误处理流程
-  - ✅ 错误恢复机制
-- ⏳ 性能优化
-  - ✅ 原生SDK迁移
-  - ✅ 资源管理优化
-  - ⏳ 内存使用优化
+### 4.1 Core Enhancements (90%)
+- ✅ Error handling system
+  - Unified error types
+  - Error handling flow
+  - Recovery mechanism
+- ⏳ Performance optimization
+  - Native SDK migration
+  - Resource management
+  - Memory usage optimization (in progress)
 
-### 4.2 测试覆盖（进度：70%）
-- ✅ 单元测试
-  - ✅ 服务测试
-  - ✅ 工具函数测试
-  - ✅ 错误处理测试
-- ⏳ 集成测试
-  - ✅ 服务集成测试
-  - ⏳ API集成测试
-  - ⏳ 流程测试
+### 4.2 Testing Coverage (70%)
+- ✅ Unit tests
+  - Service tests
+  - Utility tests
+  - Error handling tests
+- ⏳ Integration tests
+  - Service integration tests
+  - API integration tests
+  - Flow tests
 
-### 4.3 文档完善（进度：85%）
-- ✅ 核心文档
-  - ✅ 架构文档
-  - ✅ API文档
-  - ✅ 开发指南
-- ⏳ 使用文档
-  - ✅ 最佳实践
-  - ⏳ 示例代码
-  - ⏳ 故障排除
+### 4.3 Documentation (85%)
+- ✅ Core docs
+  - Architecture docs
+  - API docs
+  - Dev guide
+- ⏳ User docs
+  - Best practices
+  - Code examples
+  - Troubleshooting
 
-### 4.4 Chrome插件优化（进度：90%）
-- ✅ 性能优化
-  - ✅ 资源加载优化
-  - ✅ 响应速度优化
-  - ⏳ 内存使用优化
+### 4.4 Chrome Extension Optimization (90%)
+- ✅ Performance
+  - Resource load optimization
+  - Response speed improvements
+  - Memory usage optimization (in progress)
 
-- ✅ 安全加固
-  - ✅ 权限管理
-  - ✅ 数据安全
-  - ⏳ 通信安全
+- ✅ Security
+  - Permission management
+  - Data security
+  - Communication security (in progress)
 
-- ⏳ 测试与文档
-  - ✅ 单元测试
-  - ⏳ 集成测试
-  - ⏳ 文档更新
+- ⏳ Tests and docs
+  - Unit tests
+  - Integration tests
+  - Documentation updates
 
-## 5. 待开发功能
+## 5. Planned Features
 
-### 5.1 高级功能（计划启动：4月初）
-- ⏳ 批量处理
-  - ⏳ 批量优化
-  - ⏳ 任务队列
-  - ⏳ 进度管理
-- ⏳ 提示词分析
-  - ⏳ 质量评估
-  - ⏳ 性能分析
-  - ⏳ 优化建议
+### 5.1 Advanced Features (starting early April)
+- ⏳ Batch processing
+  - Batch optimization
+  - Task queue
+  - Progress management
+- ⏳ Prompt analysis
+  - Quality evaluation
+  - Performance analysis
+  - Optimization suggestions
 
-## 6. 技术指标
+## 6. Metrics
 
-### 6.1 当前指标（2024-02-26）
-- 代码测试覆盖率：80%
-- 页面加载时间：1.3秒
-- API响应时间：0.8-2.0秒
-- 首次内容渲染：0.8秒
+### Current (2024-02-26)
+- Code coverage: 80%
+- Page load time: 1.3s
+- API response: 0.8–2.0s
+- First content render: 0.8s
 
-### 6.2 目标指标（4月初）
-- 代码测试覆盖率：>85%
-- 页面加载时间：<1.2秒
-- API响应时间：<1.5秒
-- 首次内容渲染：<0.8秒
+### Target (early April)
+- Code coverage: >85%
+- Page load: <1.2s
+- API response: <1.5s
+- First render: <0.8s
 
-## 7. 风险评估
+## 7. Risk Assessment
 
-### 7.1 技术风险
-- 🟢 原生SDK集成
-  - 版本兼容性已解决
-  - API稳定性已验证
-  - 性能提升明显
-- 🟢 多模型支持
-  - API差异处理已完成
-  - 错误处理统一完成
-  - 配置复杂性降低
-- 🟡 安全性问题
-  - API密钥保护已实现
-  - 数据安全待加强
-  - XSS防护完善中
+### Technical
+- Native SDK integration: Compatibility resolved, API stable, performance improved
+- Multi-model support: API differences handled, error handling unified, config complexity reduced
+- Security: API key protection done, data security improving, XSS protection in progress
 
-### 7.2 项目风险
-- 🟢 进度风险
-  - 核心功能已完成
-  - 测试覆盖持续增加
-  - 文档更新同步
-- 🟢 质量风险
-  - 代码质量控制
-  - 性能优化明显
-  - 用户体验提升
-- 🟢 Chrome API兼容性（已解决）
-- 🟡 性能瓶颈（优化中）
-- 🟢 跨域通信（已解决）
+### Project
+- Progress: Core done, testing improving, docs updating
+- Quality: Code quality controlled, performance optimized, UX improving
+- Chrome API compatibility: Resolved
+- Performance bottlenecks: Being optimized
+- Cross-origin communication: Resolved
 
-## 8. 发布计划
+## 8. Release Plan
 
-### 8.1 测试版（v0.1.0）- 预计3月初发布
-- ✅ 基础功能可用
-- ✅ 核心特性完整
-- ✅ 初步性能优化
-- ✅ 基本安全措施
+### Beta v0.1.0 (early March)
+- Basic features functional
+- Core features complete
+- Initial performance optimization
+- Basic security measures
 
-### 8.2 正式版（v1.0.0）- 预计3月中旬发布
-- ⏳ 完整功能集
-- ⏳ 性能优化完成
-- ⏳ 安全措施完善
-- ⏳ 文档完整
+### Stable v1.0.0 (mid-March)
+- Complete feature set (in progress)
+- Performance optimization (in progress)
+- Security improvements (in progress)
+- Complete documentation (in progress)
 
-## 9. 发布准备
+## 9. Release Prep
 
-### 9.1 商店发布材料（进行中）
-- ⏳ 扩展描述
-- ⏳ 详细功能介绍
-- ⏳ 高质量截图（至少3张）
-- ⏳ 宣传视频（可选）
-- ⏳ 隐私政策
+### Store assets
+- Extension description (in progress)
+- Feature details (in progress)
+- Screenshots (in progress)
+- Promo video (optional)
+- Privacy policy (in progress)
 
-### 9.2 最终审核（计划中）
-- ⏳ 代码审核
-- ⏳ 功能测试
-- ⏳ 权限审查
-- ⏳ 安全检查
-- ⏳ 性能测试
+### Final review
+- Code review (planned)
+- Functional testing (planned)
+- Permission review (planned)
+- Security check (planned)
+- Performance testing (planned)
 
-## 10. 后续计划
+## 10. Next Steps
 
-### 10.1 近期计划（1-2周）
-1. 完成剩余功能优化
-   - 内存使用优化
-   - 性能进一步调优
-   - 用户体验改进
+### Short term (1-2 weeks)
+- Finalize feature optimizations
+- Improve test coverage
+- Complete documentation
 
-2. 提升测试覆盖率
-   - 补充集成测试
-   - 完善API测试
-   - 添加E2E测试
+### Mid term (2-3 weeks)
+- Finish Chrome extension launch prep
+- Start advanced features
 
-3. 完善文档系统
-   - 更新技术栈文档
-   - 添加示例代码
-   - 编写故障排除指南
+### Long term (1-2 months)
+- Complete product stabilization
+- Continue performance improvements
+- Build community and examples
 
-### 10.2 中期计划（2-3周）
-1. 完成Chrome插件发布准备
-   - 最终功能测试
-   - 性能优化
-   - 文档准备
-   - 商店资料准备
+## 11. Maintenance Plan
 
-2. 开发高级功能
-   - 实现批量处理
-   - 添加分析功能
-   - 优化用户体验
+- Bug fixes
+- Performance monitoring
+- Security updates
+- User feedback handling
 
-### 10.3 长期计划（1-2月）
-1. 产品化完善
-   - 功能完整性
-   - 稳定性提升
-   - 性能持续优化
+## 12. Changelog Highlights
+- 2024-02-26: Migrated from LangChain to native SDK
+- 2024-02-26: Updated config and dependencies
+- 2024-02-25: Improved env loading and testing
+- 2024-02-25: Refactored core exports
+- 2024-02-21: Refactored history, improved UI
+- 2024-02-18: Improved template type safety
+- 2024-02-18: Modularized UI package
+- 2024-02-15: Enhanced multi-model support
+- 2024-02-14: Refactored prompt service
+- 2024-02-12: Refactored UI structure
 
-2. 社区建设
-   - 开源推广
-   - 文档完善
-   - 示例丰富
+## 13. Chrome Extension Notes
 
-## 11. 维护计划
-
-### 11.1 日常维护
-- 问题修复
-- 性能监控
-- 安全更新
-- 用户反馈
-
-### 11.2 版本更新
-- 功能迭代
-- 性能优化
-- 安全加固
-- 文档更新
-
-## 12. 更新记录
-- 2024-02-26: 完成从LangChain迁移到原生SDK
-- 2024-02-26: 更新项目配置和依赖
-- 2024-02-25: 优化环境变量加载和测试集成
-- 2024-02-25: 重构核心包导出和模块结构
-- 2024-02-21: 重构历史记录管理，移除初始化逻辑并优化UI组件
-- 2024-02-18: 改进模板选择类型安全性和错误处理
-- 2024-02-18: 模块化UI包并改进扩展和Web应用中的类型安全性
-- 2024-02-15: 优化多模型支持
-- 2024-02-14: 重构提示词服务
-- 2024-02-12: 重构UI组件结构
-
-## 13. Chrome扩展开发经验
-
-### 13.1 图标问题排查
-- manifest.json中的图标设置需要严格遵循Chrome扩展规范
-- 图标必须是有效的PNG格式
-- 图标尺寸必须严格符合声明（16x16、48x48、128x128）
-- 如果图标不显示，可以尝试更换其他已确认可用的PNG图片进行测试 
+### Icon troubleshooting
+- Icons must follow Chrome extension specs
+- Icons must be valid PNGs
+- Sizes must match declarations (16x16, 48x48, 128x128)
+- If icons don’t display, try alternate valid PNGs
