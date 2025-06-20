@@ -1,57 +1,55 @@
-# AI辅助开发指南
+# AI-Assisted Development Guide
 
-**1. 简介：**
-* 强调采用结构化方法进行AI辅助开发的重要性
-* 说明这些指南旨在帮助开发者高效利用AI工具，最小化token使用，减少错误
+## 1. Overview
+- Emphasizes the importance of a structured approach to AI-assisted development.
+- These guidelines help developers use AI tools efficiently, minimize token usage, and reduce errors.
 
-**2. 项目设置：**
-* 创建项目地图（`fileNames.md`）的重要性
-* `fileNames.md`应列出所有文件和目录，包括每个组件用途和功能的单行描述
-* 说明文档文件夹的作用，以及以下文件的结构：
-  - `prd.md`（产品需求文档）
-  - `app-flow.md`（应用流程）
-  - `backend-structure.md`（后端结构）
-  - `frontend-guidelines.md`（前端指南）
-  - `tech-stack.md`（技术栈）
-  - `file-structure.md`（文件结构）
+## 2. Project Setup
+- Create a project map (`fileNames.md`) listing all files/directories with a one-line description for each.
+- Organize documentation files, such as:
+  - `prd.md` (Product Requirements)
+  - `app-flow.md` (Application Flow)
+  - `backend-structure.md`
+  - `frontend-guidelines.md`
+  - `tech-stack.md`
+  - `file-structure.md`
 
-**3. Claude作为"软件架构师"：**
-* 如何设置专用的Claude项目来优化提示词
-* Claude项目知识库应包含：
-  - 完整的文件结构（`fileNames.md`）
-  - 主要功能需求文档
-  - 组件特定的功能需求文档
-  - Cursor/bolt.new的文档
+## 3. Using Claude as "Software Architect"
+- Set up a dedicated Claude project to optimize prompts.
+- Knowledge base should include:
+  - Full file structure (`fileNames.md`)
+  - Main feature requirement docs
+  - Component-specific requirement docs
+  - Relevant Cursor/bolt.new docs
 
-**4. 结构化提示流程：**
-* 解释包含"系统提示"和"执行提示"的两步提示流程
-* 使用模式说明：
-  - 使用系统提示设置Claude上下文
-  - 使用执行提示让Claude分析问题，识别受影响的文件，并建议高效方法
-* 提供执行提示的详细示例，如："我们需要为登录表单添加邮箱验证。参考`fileNames.md`中的`src/components/login.jsx`和项目知识中的`Documentation/FRD/auth.md`。请为`bolt.new`建议一个修改该文件的高效方法，添加邮箱验证逻辑。"
+## 4. Structured Prompt Workflow
+- Use a two-step process: "system prompt" (context) + "execution prompt" (action).
+- Example execution prompt:  
+  _"We need to add email validation to the login form. See `src/components/login.jsx` in `fileNames.md` and `Documentation/FRD/auth.md`. Suggest an efficient modification plan for `bolt.new`."_  
 
-**5. Cursor提示技巧：**
-* **"修复错误"**：
-  - 说明AI模型有时会遗漏细节并触发错误循环
-  - 提示词："分析此错误。识别其原因并创建分步解决方案。"
-* **"新功能"**：
-  - 说明AI需要针对每个组件范围重新上下文化
-  - 提示词："阅读`@`中的描述并创建实现计划。在继续之前，编写实现计划。在执行之前解释你要更改的内容。"
-* **响应结构**：
-  - 说明如何向AI提供更新和上下文
-  - 提供示例："页眉现已对齐。现在我们需要一个登录按钮。查看@login-doc并解释你的方法"
+## 5. Cursor Prompt Tips
+- **Fix Errors**  
+  Prompt: _"Analyze this error. Identify the cause and create a step-by-step solution."_
+- **New Feature**  
+  Prompt: _"Read the `@` description and create an implementation plan. Before coding, explain the planned changes."_  
+- **Response Structure**  
+  Example: _"The header is now aligned. We need a login button next. Review @login-doc and explain your method."_
 
-**6. 进度追踪：**
-* `progress.md`文件的用途和提示词："在每个完成的步骤结束时，在`@progress.md`中记录你的工作。实现了哪些功能，出现了什么错误，以及如何修复的？按顺序回答这三个问题，不要遗漏信息。"
-* `project-status.md`文件的用途和提示词："在每个工作会话结束时，在`@project-status.md`中记录你的工作。查看`@progress.md`文件以总结所有工作，描述本次会话完成的内容。为下一个工作会话创建详细报告，以便提供完整概述。"
+## 6. Progress Tracking
+- Use `progress.md`  
+  Prompt: _"At the end of each step, log what was done, any errors, and how they were fixed."_  
+- Use `project-status.md`  
+  Prompt: _"At the end of each session, summarize from `@progress.md` and create a report for the next session."_  
 
-**7. Cursor代理技巧：**
-* 解释Cursor代理可能的过度执行问题
-* 提供以下指导来防止该问题："阅读@(文档名称)以确定函数范围。使用思维链逻辑创建分步实现计划。详细概述功能的每个部分，提供高层次概述。将这些部分分解为详细的编号步骤。这将提供一个你可以批准的计划，并确保操作符合要求。"
+## 7. Cursor Agent Tips
+- Avoid over-execution by:
+  - Reading doc references for scope
+  - Creating a step-by-step plan with clear breakdowns
+  - Providing a plan for approval before executing
 
-**8. `.bolt/ignore`优化：**
-* 解释最小化LLM上下文的必要性
-* 解释`.bolt/ignore`文件的使用方法以及如何识别要排除的文件和目录
+## 8. `.bolt/ignore` Best Practices
+- Minimize LLM context size.
+- Use `.bolt/ignore` to exclude unnecessary files and directories.
 
-**9. 结论：**
-* 重申这种方法的总体目标以及它如何使开发人员能够高效工作
+## 9. Conclusion
+- The goal of this approach is to empower developers to work efficiently with AI assistance.
