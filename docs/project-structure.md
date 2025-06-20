@@ -1,194 +1,190 @@
-# 项目结构文档
+# Project Structure Document
 
-> **注意:** 本文档专注于项目的文件和目录结构。关于技术栈详情和实现流程，请参考 [技术文档](./technical-documentation.md)。
+> **Note:** This document focuses on the file and directory structure of the project.
 
-## 1. 项目整体架构
+## 1. Top-Level Structure
 
-### 1.1 根目录结构
 ```
 prompt-optimizer/
-├── packages/             # 项目包
-│   ├── core/            # 核心功能包
-│   │   ├── src/         # 核心源代码
-│   │   ├── tests/       # 核心包测试
-│   │   └── package.json # 核心包配置
-│   ├── web/             # Web版本
-│   │   ├── src/         # Web源代码
-│   │   ├── tests/       # Web测试
-│   │   └── package.json # Web包配置
-│   └── extension/       # Chrome插件
-├── docs/                # 项目文档
-├── tools/               # 工具脚本
-└── ...配置文件
+├── packages/             # Project packages
+│   ├── core/            # Core functionality
+│   │   ├── src/         # Core source code
+│   │   ├── tests/       # Core tests
+│   │   └── package.json # Core package config
+│   ├── web/             # Web app
+│   │   ├── src/         # Web source code
+│   │   ├── tests/       # Web tests
+│   │   └── package.json # Web package config
+│   └── extension/       # Chrome extension
+├── docs/                # Documentation
+├── tools/               # Utility scripts
+└── ...config files
 ```
 
-### 1.2 配置文件
-- `pnpm-workspace.yaml` - 工作区配置
-- `.env.example` - 环境变量示例
-- `package.json` - 项目配置
-- `.vscode/` - VSCode配置目录
-- `.cursorrules` - Cursor IDE配置
-- `.windsurfrules` - Windsurf IDE配置
-- `.gitignore` - Git忽略配置
+### Config Files
+- `pnpm-workspace.yaml` — Workspace config
+- `.env.example` — Example env vars
+- `package.json` — Project config
+- `.vscode/` — VSCode settings
+- `.cursorrules` — Cursor IDE settings
+- `.windsurfrules` — Windsurf IDE settings
+- `.gitignore` — Git ignore rules
 
-### 1.3 工作区文件
-- `README.md` - 项目说明文档
-- `scratchpad.md` - 开发笔记和任务规划
-- `experience.md` - 项目经验总结
-- `cursor_tips.md` - AI辅助开发指南 
+### Workspace Files
+- `README.md` — Project intro
+- `scratchpad.md` — Notes / planning
+- `experience.md` — Lessons learned
+- `cursor_tips.md` — AI dev tips
 
-### 1.4 文档目录 (docs/)
-- `README.md` - 文档索引
-- `development-guidelines.md` - 开发指南
-- `project-status.md` - 项目状态
-- `project-structure.md` - 项目结构
-- `technical-documentation.md` - 技术文档
-- `prd.md` - 产品需求文档
-- `CHANGELOG.md` - 更新日志
+### Docs Directory (`docs/`)
+- `README.md` — Docs index
+- `development-guidelines.md` — Dev guidelines
+- `project-status.md` — Status info
+- `project-structure.md` — This file
+- `technical-documentation.md` — Tech docs
+- `prd.md` — Product requirements
+- `CHANGELOG.md` — Changelog
 
-## 2. 核心包结构 (packages/core)
+## 2. Core Package (`packages/core`)
 
-### 2.1 源代码目录 (packages/core/src/)
+### Source (`src/`)
 ```
 src/
-├── services/           # 核心服务
-│   ├── llm/           # LLM服务
-│   │   ├── service.ts # LLM服务实现
-│   │   ├── types.ts   # 类型定义
-│   │   └── errors.ts  # 错误定义
-│   ├── model/         # 模型管理
-│   │   ├── manager.ts # 模型管理器
-│   │   ├── types.ts   # 类型定义
-│   │   └── defaults.ts# 默认配置
-│   ├── prompt/        # 提示词服务
-│   │   ├── service.ts # 提示词服务实现
-│   │   ├── types.ts   # 类型定义
-│   │   └── errors.ts  # 错误定义
-│   ├── template/      # 模板服务
-│   │   ├── manager.ts # 模板管理器
-│   │   ├── types.ts   # 类型定义
-│   │   └── defaults.ts# 默认配置
-│   └── history/       # 历史记录服务
-│       ├── manager.ts # 历史管理器
-│       └── types.ts   # 类型定义
-├── types/             # 公共类型定义
-└── utils/             # 工具函数
+├── services/
+│   ├── llm/
+│   │   ├── service.ts
+│   │   ├── types.ts
+│   │   └── errors.ts
+│   ├── model/
+│   │   ├── manager.ts
+│   │   ├── types.ts
+│   │   └── defaults.ts
+│   ├── prompt/
+│   │   ├── service.ts
+│   │   ├── types.ts
+│   │   └── errors.ts
+│   ├── template/
+│   │   ├── manager.ts
+│   │   ├── types.ts
+│   │   └── defaults.ts
+│   └── history/
+│       ├── manager.ts
+│       └── types.ts
+├── types/
+└── utils/
 ```
 
-### 2.2 API目录 (src/api/)
-- `api/llm.js` - LLM API调用封装
+### API (`src/api/`)
+- `api/llm.js` — LLM API wrapper
 
-### 2.3 配置目录 (packages/core/config/)
-- `models.js` - LLM模型配置
-- `prompts.js` - 提示词模板配置
+### Config (`config/`)
+- `models.js` — Model configs
+- `prompts.js` — Prompt templates
 
-### 2.4 测试目录 (packages/core/tests/)
+### Tests
 ```
 tests/
-├── unit/             # 单元测试
-│   └── services/     # 服务测试
-│       ├── llm/      # LLM服务测试
-│       ├── model/    # 模型管理测试
-│       └── prompt/   # 提示词服务测试
-└── integration/      # 集成测试
-    └── services/     # 服务集成测试
+├── unit/
+│   └── services/
+│       ├── llm/
+│       ├── model/
+│       └── prompt/
+└── integration/
+    └── services/
 ```
 
-### 2.5 核心包配置
-- `package.json` - 核心包配置
-- `tsconfig.json` - TypeScript配置
-- `vitest.config.ts` - 测试配置
+### Core Config
+- `package.json`
+- `tsconfig.json`
+- `vitest.config.ts`
 
-## 3. Web包结构 (packages/web)
+## 3. Web Package (`packages/web`)
 
-### 3.1 源代码目录 (packages/web/src/)
+### Source (`src/`)
 ```
 src/
-├── components/        # Vue组件
-│   ├── PromptPanel.vue    # 提示词面板
-│   ├── ModelManager.vue   # 模型管理器
-│   ├── TemplateManager.vue# 模板管理器
-│   ├── InputPanel.vue     # 输入面板
-│   └── OutputPanel.vue    # 输出面板
-├── composables/       # Vue组合式函数
-├── services/          # 业务逻辑
-│   ├── llm/           # LLM服务
-│   ├── model/         # 模型配置
-│   ├── prompt/        # 提示词服务
-│   ├── promptManager.js # 提示词管理
-│   └── themeManager.js # 主题管理
-├── assets/           # 静态资源
-│   ├── images/       # 图片资源
-│   └── styles/       # 样式资源
-├── prompts/          # 提示词模板
-├── App.vue           # 根组件
-└── main.ts           # 入口文件
+├── components/
+│   ├── PromptPanel.vue
+│   ├── ModelManager.vue
+│   ├── TemplateManager.vue
+│   ├── InputPanel.vue
+│   └── OutputPanel.vue
+├── composables/
+├── services/
+│   ├── llm/
+│   ├── model/
+│   ├── prompt/
+│   ├── promptManager.js
+│   └── themeManager.js
+├── assets/
+│   ├── images/
+│   └── styles/
+├── prompts/
+├── App.vue
+└── main.ts
 ```
 
-### 3.2 组件目录详情 (packages/web/src/components/)
-- `PromptPanel.vue` - 提示词输入和优化面板
-- `InputPanel.vue` - 输入面板组件
-- `OutputPanel.vue` - 输出面板组件
-- `ModelConfig.vue` - 模型配置组件
-- `ThemeToggle.vue` - 主题切换组件
-- `LoadingSpinner.vue` - 加载动画组件
+### Components
+- `PromptPanel.vue` — Prompt input & optimization
+- `InputPanel.vue` — Input panel
+- `OutputPanel.vue` — Output panel
+- `ModelConfig.vue` — Model config
+- `ThemeToggle.vue` — Theme toggle
+- `LoadingSpinner.vue` — Spinner
 
-### 3.3 测试目录 (packages/web/tests/)
+### Tests
 ```
 tests/
-├── unit/            # 单元测试
-│   ├── components/  # 组件测试
-│   └── services/    # 服务测试
-└── integration/     # 集成测试
-    └── services/    # 服务集成测试
+├── unit/
+│   ├── components/
+│   └── services/
+└── integration/
+    └── services/
 ```
 
-### 3.4 Web包配置
-- `package.json` - Web包配置
-- `vite.config.ts` - Vite配置
-- `tailwind.config.js` - TailwindCSS配置
-- `.env.local` - 本地环境变量
-- `postcss.config.js` - PostCSS配置
-- `index.html` - 项目入口HTML文件
+### Web Config
+- `package.json`
+- `vite.config.ts`
+- `tailwind.config.js`
+- `.env.local`
+- `postcss.config.js`
+- `index.html`
 
-## 4. 扩展包结构 (packages/extension)
+## 4. Extension Package (`packages/extension`)
 
-### 4.1 源代码目录 (packages/extension/src/)
+### Source (`src/`)
 ```
 src/
-├── popup/           # 弹出窗口界面
-├── background/      # 后台脚本
-├── content/         # 内容脚本
-└── manifest.json    # 扩展配置文件
+├── popup/
+├── background/
+├── content/
+└── manifest.json
 ```
 
-### 4.2 扩展包配置
-- `package.json` - 扩展包配置
-- `vite.config.ts` - 构建配置
+### Config
+- `package.json`
+- `vite.config.ts`
 
-## 5. 依赖关系
+## 5. Dependencies
 
-### 5.1 核心包依赖 (@prompt-optimizer/core)
+### Core (`@prompt-optimizer/core`)
+```
+@openai/openai
+@google/generative-ai
+uuid
+```
+
+### Web (`@prompt-optimizer/web`)
 ```
 @prompt-optimizer/core
-├── @openai/openai ^4.83.0      # OpenAI SDK
-├── @google/generative-ai ^0.21.0 # Google Generative AI SDK
-└── uuid ^11.0.5                # UUID生成
+vue
+pinia
+tailwindcss
 ```
 
-### 5.2 Web包依赖 (@prompt-optimizer/web)
+### Extension (`@prompt-optimizer/extension`)
 ```
-@prompt-optimizer/web
-├── @prompt-optimizer/core  # 依赖核心包
-├── vue ^3.5.x             # Vue框架
-├── pinia ^2.1.x           # 状态管理
-└── tailwindcss ^3.4.1     # 样式框架
+@prompt-optimizer/core
+@prompt-optimizer/ui
+vue
 ```
-
-### 5.3 扩展包依赖 (@prompt-optimizer/extension)
-```
-@prompt-optimizer/extension
-├── @prompt-optimizer/core  # 依赖核心包
-├── @prompt-optimizer/ui    # 依赖UI组件包
-└── vue ^3.5.x             # Vue框架
-``` 
